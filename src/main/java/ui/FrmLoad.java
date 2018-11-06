@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -27,8 +28,10 @@ public class FrmLoad extends JDialog implements ActionListener{
 	private JLabel lableurl=new JLabel("文件url:");
 	private JTextField edturl=new JTextField(50);
 	public FrmLoad(Frame f,String s,boolean b)
+	//public FrmLoad()//测试用
 	{
 		super(f,s,b);
+		//super();
 		toolBar.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		toolBar.add(this.btnLoad);
 		toolBar.add(this.btnOk);
@@ -68,11 +71,23 @@ public class FrmLoad extends JDialog implements ActionListener{
 		}else if(e.getSource()==this.btnOk)
 		{
 			URL.WordURL=edturl.getText();
+		/*	try {                               //测试用
+				poi.load.readAndWriterTest3();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}*/
 			this.setVisible(false);
 		}else if(e.getSource()==this.btnCancel)
 		{
 			System.exit(0);
 		}
+	}
+	public static void main(String[] args)
+	{
+		FrmLoad f=new FrmLoad();
+		f.setVisible(true);
+		
 	}
 }
 

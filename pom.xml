@@ -15,15 +15,6 @@
        <artifactId>neo4j</artifactId>
        <version>3.3.5</version>
      </dependency>
-     <dependency>
-	   <groupId>org.apache.poi</groupId>
-	   <artifactId>poi</artifactId>
-	   <version>3.17</version>
-     </dependency>
-     <dependency>
-	    <groupId>org.apache.poi</groupId>
-	    <artifactId>poi-ooxml</artifactId>
-	    <version>3.17</version>
-	</dependency>
+	
   </dependencies>
 </project>

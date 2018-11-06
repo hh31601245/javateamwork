@@ -17,11 +17,11 @@ package model;
 	Sentence  刑期  判决如下之后的文章通过回车分成好几段文字，，if(有数罪并罚)，决定执行[\u4e00-\u9fa5]+（这里的还包括了刑期）else判处[\u4e00-\u9fa5]+
 	PropertyPenaltyType 财产刑种类  判决如下之后的文章通过回车分成好几段文字，if(有数罪并罚) 取数罪并罚后的文字，并处[\u4e00-\u9fa5]+人民币 else 并处[\u4e00-\u9fa5]+ 人民币
 	PropertyPenaltyAmount 财产刑金额  判决如下之后的文章通过回车分成好几段文字，if(有数罪并罚) 取数罪并罚后的文字，并处[\u4e00-\u9fa5]+人民币[\d\u4e00-\u9fa5]+ else 并处[\u4e00-\u9fa5]+ 人民币[\d\u4e00-\u9fa5]+
-
+    Cid  案件号
  */
 public class Defendant {
 	public static final String[] TABLE_TITLE={"编号","人名","性别","年龄","出生年月日",
-			                                  "学历","罪名","刑罚种类","刑期","财产刑种类","财产刑金额"};
+			                                  "学历","罪名","刑罚种类","刑期","财产刑种类","财产刑金额","案件号"};
 	/**
 	 * 请自行根据javabean的设计修改本函数代码，col表示界面表格中的列序号，0开始
 	 */
@@ -48,7 +48,11 @@ public class Defendant {
 			return this.getPropertyPenaltyType();
 		} else if(col==10) {
 			return String.valueOf(this.getPropertyPenaltyAmount());
-		} else {
+		}else if(col==11)
+		{
+			return this.getCid();
+		}
+		else {
 			return "";
 		}
 	}
@@ -63,6 +67,30 @@ public class Defendant {
 	private String Sentence;
 	private String PropertyPenaltyType;
 	private double PropertyPenaltyAmount;
+	private String Cid;
+	public Defendant(String Did,String Dname,String Sex,int Age,String DateOfBrith,
+	         String Education,String Crime,String PenaltyType,String Sentence,
+	         String PropertyPenaltyType,double PropertyPenaltyAmount,String Cid)
+	{
+	this.Did=Did;
+	this.Dname=Dname;
+	this.Sex=Sex;
+	this.Age=Age;
+	this.DateOfBrith=DateOfBrith;
+	this.Education=Education;
+	this.Crime=Crime;
+	this.PenaltyType=PenaltyType;
+	this.Sentence=Sentence;
+	this.PropertyPenaltyType=PropertyPenaltyType;
+	this.PropertyPenaltyAmount=PropertyPenaltyAmount;
+	this.Cid=Cid;
+	}
+	public String getCid() {
+		return Cid;
+	}
+	public void setCid(String cid) {
+		Cid = cid;
+	}
 	public String getDid() {
 		return Did;
 	}

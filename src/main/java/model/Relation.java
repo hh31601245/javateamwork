@@ -35,6 +35,13 @@ public class Relation {
 	private String Aname;
 	private String Bname;
 	private String Relate;
+	public Relation(String Rid,String Aname,String Bname,String Relate)
+	{
+		this.Rid=Rid;
+		this.Aname=Aname;
+		this.Bname=Bname;
+		this.Relate=Relate;
+	}
 	public String getRid() {
 		return Rid;
 	}

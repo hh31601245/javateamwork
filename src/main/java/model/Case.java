@@ -69,6 +69,24 @@ public class Case {
 	private double PropertyPenaltyAmount;
 	private String DrugTypeAndNumberOrUnit;
 	private String DrugPrice;
+	public Case(String Cid,String CourtName,int NumberPeople,int MinAge,
+		    String FirstDefendant,String Crime,String Penaltytype,
+		    String Sentence,String PropertyPenaltyType,double PropertyPenaltyAmount,
+		    String DrugTypeAndNumberOrUnit,String DrugPrice)
+	{
+		this.Cid=Cid;
+		this.CourtName=CourtName;
+		this.NumberPeople=NumberPeople;
+		this.MinAge=MinAge;
+		this.FirstDefendant=FirstDefendant;
+		this.Crime=Crime;
+		this.PenaltyType=Penaltytype;
+		this.Sentence=Sentence;
+		this.PropertyPenaltyType=PropertyPenaltyType;
+		this.PropertyPenaltyAmount=PropertyPenaltyAmount;
+		this.DrugTypeAndNumberOrUnit=DrugTypeAndNumberOrUnit;
+		this.DrugPrice=DrugPrice;
+	}
 	public String getCid() {
 		return Cid;
 	}
