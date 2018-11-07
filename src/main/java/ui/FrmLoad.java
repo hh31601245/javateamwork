@@ -32,7 +32,7 @@ public class FrmLoad extends JDialog implements ActionListener{
 	{
 		super(f,s,b);
 		//super();
-		toolBar.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		toolBar.setLayout(new FlowLayout(FlowLayout.CENTER));
 		toolBar.add(this.btnLoad);
 		toolBar.add(this.btnOk);
 		toolBar.add(this.btnCancel);
@@ -40,7 +40,7 @@ public class FrmLoad extends JDialog implements ActionListener{
 		workPane.add(lableurl);
 		workPane.add(edturl);
 		this.getContentPane().add(workPane,BorderLayout.CENTER);
-		this.setSize(320, 280);
+		this.setSize(700,150);
 		double width=Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 		double heigh=Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 		this.setLocation((int)(width-this.getWidth())/2,(int)(heigh-this.getHeight())/2);
@@ -85,8 +85,8 @@ public class FrmLoad extends JDialog implements ActionListener{
 	}
 	public static void main(String[] args)
 	{
-		FrmLoad f=new FrmLoad();
-		f.setVisible(true);
+		//FrmLoad f=new FrmLoad();
+		//f.setVisible(true);
 		
 	}
 }

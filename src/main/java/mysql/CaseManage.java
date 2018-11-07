@@ -11,8 +11,7 @@ public class CaseManage implements ICaseManage{
 		Case c=new Case("001", "1", 0, 0, null, null, null, null, null, 0, null, null); //填入一些值
 		Defendant d=new Defendant("1", "a", null, 0, null, null, null, null, null, null, 0,null); //
 		Relation r=new Relation("1", "a", "001", "1");  
-		CaseManage test=new CaseManage();
-		//test.addCase(c);  然后像这样的感觉测试知道能用
+		new CaseManage();
 		
 	}
 	/**
