@@ -1,11 +1,19 @@
 package mysql;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
+import cn.edu.zucc.personplan.model.BeanUser;
+import cn.edu.zucc.personplan.util.BusinessException;
+import cn.edu.zucc.personplan.util.DBUtil2;
+import util.DBUtil;
 import itf.IRelationManage;
 import model.Case;
 import model.Defendant;
 import model.Relation;
 import util.BaseException;
+import util.DbException;
 public class RelationManage implements IRelationManage{
 
 	public static void main(String[] args) {
@@ -27,6 +35,7 @@ public class RelationManage implements IRelationManage{
 	@Override
 	public void addRelation(Relation r) throws BaseException {
 		// TODO Auto-generated method stub
+		Connection conn=null;
 		
 	}
 	/**
@@ -39,7 +48,41 @@ public class RelationManage implements IRelationManage{
 	@Override
 	public List<Relation> loadAll() throws BaseException {
 		// TODO Auto-generated method stub
-		return null;
+		List<Relation> result=new ArrayList<Relation>();
+		Connection conn=null;
+		try
+		{
+			conn=DBUtil.getConnection();
+			String sql="select * from relation";
+			java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+			java.sql.ResultSet rs=pst.executeQuery();
+			while(rs.next())
+			{
+				Relation r=new Relation();
+				r.setRid(rs.getString(1));
+				r.setAname(rs.getString(2));
+				r.setBname(rs.getString(3));
+				r.setRelate(rs.getString(4));
+				result.add(r);
+			}
+		}catch(SQLException e)
+		{
+			e.printStackTrace();
+			throw new DbException(e);
+		}finally
+		{
+			if(conn!=null)
+			{
+				try
+				{
+					conn.close();
+				}catch(SQLException e)
+				{
+					e.printStackTrace();
+				}
+			}
+		}
+		return result;
 	}
 	/**
 	 * deleteRelation
@@ -49,9 +92,53 @@ public class RelationManage implements IRelationManage{
 	 * 删除的同时将数据库Defendant中该数据之后的数据的Rid都减一
 	 */
 	@Override
-	public void deleteRelation(Relation d) throws BaseException {
+	public void deleteRelation(Relation r) throws BaseException {
 		// TODO Auto-generated method stub
-		
+		Connection conn=null;
+		try
+		{
+			conn=DBUtil.getConnection();
+			conn.setAutoCommit(false);
+			String sql="delete from relation where Rid=?";
+			java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+			pst.setString(1,r.getRid());
+			pst.execute();
+			String sql1="update relation set Rid=Rid-1 where Rid>?";
+			java.sql.PreparedStatement pst1=conn.prepareStatement(sql1);
+			pst1.setString(1,r.getRid());
+			pst1.execute();
+		}catch(Exception e)
+		{
+			try
+			{
+				conn.rollback();
+			}catch(SQLException e1)
+			{
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}finally
+		{
+			try
+			{
+			conn.commit();
+			
+			}catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+			if(conn!=null)
+			{
+				try
+				{
+					conn.close();
+				}catch(SQLException e1)
+				{
+					e1.printStackTrace();
+					
+				}
+			}
+		}
 	}
 	/**
 	 * searchRelation

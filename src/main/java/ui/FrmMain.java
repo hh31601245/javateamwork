@@ -65,6 +65,7 @@ public class FrmMain extends JFrame implements ActionListener
 	List<Defendant> allDefendant=null;
 	List<Relation> allRelation=null;
 	
+	int Caseid=0;
 	private void reloadCaseTable()  //相当于刷新案件
 	{
 		try
@@ -170,6 +171,7 @@ public class FrmMain extends JFrame implements ActionListener
 					return;
 				}
 				FrmMain.this.reloadDefendantTable(i);
+				Caseid=i;
 			}
 		}
 		);
@@ -202,7 +204,7 @@ public class FrmMain extends JFrame implements ActionListener
 			
 		}else if(e.getSource()==this.menu_showcase)
 		{
-			
+			Util.casemanage.loadAll()
 		}
 		else if(e.getSource()==this.menu_showrelation)
 		{
@@ -210,11 +212,35 @@ public class FrmMain extends JFrame implements ActionListener
 		}
 		else if(e.getSource()==this.menu_deletecase)
 		{
-			
+			if(this.curCase==null)
+			{
+				JOptionPane.showMessageDialog(null, "请选择计划", "错误",JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			try
+			{
+				Util.casemanage.deleteCase(this.curCase);
+				this.reloadCaseTable();
+			}catch (BaseException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage(), "错误",JOptionPane.ERROR_MESSAGE);
+				return;
+			}
 		}
 		else if(e.getSource()==this.menu_deletedefendant)
 		{
-			
+			if(this.curDfendant==null)
+			{
+				JOptionPane.showMessageDialog(null,"请选择计划","错误",JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			try
+			{
+				Util.defendantmanage.deleteDefendant(this.curDfendant);
+				this.reloadDefendantTable(Caseid);
+			}catch(BaseException e1)
+			{
+				JOptionPane.showMessageDialog(null,e1.getMessage(),"错误",JOptionPane.ERROR_MESSAGE);
+			}
 		}
 		else if(e.getSource()==this.menu_deleterelation)
 		{

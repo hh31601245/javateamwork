@@ -1,26 +1,25 @@
 package regularexpression;
+import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import model.Relation;
 import itf.IRelationRugular;
+import poi.LoadWord;
 public class RelationRegular implements IRelationRugular{
-	public String getRId()
+
+	public static void main(String[] args)
 	{
-		return null;
+		RelationRegular r=new RelationRegular();
+		r.getSameCaseRelate();
 	}
 	@Override
-	public String getAname() {
+	public void getSameCaseRelate() {  //调用数据库
 		// TODO Auto-generated method stub
-		return null;
+		
 	}
-
 	@Override
-	public String getBname() {
+	public void getSameEducation() {
 		// TODO Auto-generated method stub
-		return null;
+		
 	}
-
-	@Override
-	public String getRelate() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 }

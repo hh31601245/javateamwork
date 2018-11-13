@@ -14,50 +14,50 @@ public interface IDefendantRegular {
 	 * 用正则获取该Cid和Did下的Dname
 	 * @return
 	 */
-	public String getDname();
+	public String getDname(String defendantword);
 	/**
 	 * 用正则获取该Cid和Did下的Sex
 	 * @return
 	 */
-	public String getSex();
+	public String getSex(String defendantword);
 	/**
 	 * 用正则获取该Cid和Did下的Age
 	 * @return
 	 */
-	public int getAge();
+	public int getAge(String defendantword);
 	/**
 	 * 用正则获取该Cid和Did下的DateOfBrith
 	 * @return
 	 */
-	public String getDateOfBrith();
+	public String getDateOfBrith(String defendantword);
 	/**
 	 * 用正则获取该Cid和Did下的Education
 	 * @return
 	 */
-	public String getEducation();
+	public String getEducation(String defendantword);
 	/**
 	 * 用正则获取该Cid和Did下的Crime
 	 * @return
 	 */
-	public String getCrime();
+	public String getCrime(String defendantword);
 	/**
 	 * 用正则获取该Cid和Did下的PenaltyType
 	 * @return
 	 */
-	public String getPenaltyType(); 
+	public String getPenaltyType(String defendantword); 
 	/**
 	 * 用正则获取该Cid和Did下的Sentence
 	 * @return
 	 */
-	public String getSentence();
+	public String getSentence(String defendantword);
 	/**
 	 * 用正则获取该Cid和Did下的PropertyPenaltyType
 	 * @return
 	 */
-	public String getPropertyPenaltyType();
+	public String getPropertyPenaltyType(String defendantword);
 	/**
 	 * 用正则获取该Cid和Did下的PropertyPenaltyAmount
 	 * @return
 	 */
-	public double getPropertyPenaltyAmount();
+	public double getPropertyPenaltyAmount(String defendantword);
 }

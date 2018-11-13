@@ -68,6 +68,8 @@ public class Defendant {
 	private String PropertyPenaltyType;
 	private double PropertyPenaltyAmount;
 	private String Cid;
+	public Defendant()
+	{}
 	public Defendant(String Did,String Dname,String Sex,int Age,String DateOfBrith,
 	         String Education,String Crime,String PenaltyType,String Sentence,
 	         String PropertyPenaltyType,double PropertyPenaltyAmount,String Cid)

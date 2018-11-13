@@ -69,6 +69,8 @@ public class Case {
 	private double PropertyPenaltyAmount;
 	private String DrugTypeAndNumberOrUnit;
 	private String DrugPrice;
+	public Case()
+	{}
 	public Case(String Cid,String CourtName,int NumberPeople,int MinAge,
 		    String FirstDefendant,String Crime,String Penaltytype,
 		    String Sentence,String PropertyPenaltyType,double PropertyPenaltyAmount,

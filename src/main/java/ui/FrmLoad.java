@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import model.URL;
-
+import regularexpression.Leading_in;
 public class FrmLoad extends JDialog implements ActionListener{
 	private JPanel toolBar=new JPanel();
 	private JPanel workPane=new JPanel();
@@ -77,6 +77,9 @@ public class FrmLoad extends JDialog implements ActionListener{
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}*/
+			Leading_in.Leading_in_Case();
+			Leading_in.Leading_in_Defendant();
+			Leading_in.Leading_in_Relation();
 			this.setVisible(false);
 		}else if(e.getSource()==this.btnCancel)
 		{

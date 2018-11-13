@@ -1,23 +1,16 @@
 package itf;
-
+import model.Relation;;
 public interface IRelationRugular {
+	
 	/**
-	 * Rid自己生成
+	 * 获取为同一个案子里这样的关系，存入数据库
 	 * @return
 	 */
+	public void getSameCaseRelate();
 	/**
-	 * 获取A的名称
+	 * 获取是同一学历这个关系，存入数据库
 	 * @return
 	 */
-	public String getAname();
-	/**
-	 * 获取B的名称
-	 * @return
-	 */
-	public String getBname();
-	/**
-	 * 获取他们的关系
-	 * @return
-	 */
-	public String getRelate();
+	public void getSameEducation();
+	
 }

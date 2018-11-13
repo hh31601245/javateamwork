@@ -35,6 +35,8 @@ public class Relation {
 	private String Aname;
 	private String Bname;
 	private String Relate;
+	public Relation()
+	{}
 	public Relation(String Rid,String Aname,String Bname,String Relate)
 	{
 		this.Rid=Rid;
