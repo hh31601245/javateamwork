@@ -25,7 +25,7 @@ import begin.Util;
 import util.BaseException;
 import model.Case;
 import model.Defendant;
-import model.Relation;
+//import model.Relation;
 
 public class FrmMain extends JFrame implements ActionListener
 {
@@ -52,18 +52,18 @@ public class FrmMain extends JFrame implements ActionListener
 	DefaultTableModel tblDefendantModel=new DefaultTableModel();
 	private JTable dataTableDefendant=new JTable(tblDefendantModel);
 	
-	private Object tblRelationTitle[]=Relation.TABLE_TITLE;
+//	private Object tblRelationTitle[]=Relation.TABLE_TITLE;
 	private Object tblRelationData[][];
 	DefaultTableModel tblRalationModel=new DefaultTableModel();
 	private JTable dataTableRelation=new JTable(tblRalationModel);
 	
 	private Case curCase=null;
 	private Defendant curDfendant=null;
-	private Relation curRelation=null;
+//	private Relation curRelation=null;
 	
 	List<Case> allCase=null;
 	List<Defendant> allDefendant=null;
-	List<Relation> allRelation=null;
+//	List<Relation> allRelation=null;
 	
 	int Caseid=0;
 	private void reloadCaseTable()  //相当于刷新案件
@@ -116,7 +116,7 @@ public class FrmMain extends JFrame implements ActionListener
 		this.dataTableDefendant.validate();
 		this.dataTableDefendant.repaint();
 	}
-	private void reloadRelation()
+/*	private void reloadRelation()
 	{
 		try
 		{
@@ -137,7 +137,7 @@ public class FrmMain extends JFrame implements ActionListener
 		this.dataTableRelation.validate();
 		this.dataTableRelation.repaint();
 	}
-	
+	*/
 	public FrmMain()
 	{
 		this.setExtendedState(Frame.MAXIMIZED_BOTH);
@@ -204,7 +204,12 @@ public class FrmMain extends JFrame implements ActionListener
 			
 		}else if(e.getSource()==this.menu_showcase)
 		{
-			Util.casemanage.loadAll()
+			try {
+				Util.casemanage.loadAll();
+			} catch (BaseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 		else if(e.getSource()==this.menu_showrelation)
 		{

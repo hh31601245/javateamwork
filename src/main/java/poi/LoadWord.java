@@ -1,6 +1,5 @@
 package poi;
 import model.Defendant;
-import model.URL;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -26,12 +25,12 @@ import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
 import org.apache.xmlbeans.XmlException;
 
 public class LoadWord {
-	public static String LoadAllWord() throws IOException{
+	public static String LoadAllWord(String title) throws IOException{
         String result=null;
 		try
 		{
-		//	InputStream is = new FileInputStream(new File(URL.WordURL));
-			InputStream is = new FileInputStream(new File("D:\\java高级\\舟山\\（2016）浙0902刑初00262号.doc"));
+		//	InputStream is = new FileInputStream(new File("D:\\java高级\\舟山\\（2016）浙0902刑初00262号.doc"));
+			InputStream is = new FileInputStream(new File(title));
 			WordExtractor ex = new WordExtractor(is);  
             String text2003 = ex.getText();  
             //System.out.println(text2003);
@@ -40,7 +39,7 @@ public class LoadWord {
 		}catch(Exception e1)
 		{
 			//OPCPackage opcPackage = POIXMLDocument.openPackage(URL.WordURL); 
-			OPCPackage opcPackage = POIXMLDocument.openPackage("D:\\java高级\\舟山\\（2016）浙0902刑初00262号.doc"); 
+			OPCPackage opcPackage = POIXMLDocument.openPackage(title); 
             POIXMLTextExtractor extractor=null;
 			try {
 				extractor = new XWPFWordExtractor(opcPackage);
@@ -59,12 +58,12 @@ public class LoadWord {
 		//String a=book.toString();
 		//System.out.println(a);
 	}
-	public static List<String> LoadDefendantWord()
+	public static List<String> LoadDefendantWord(String title)
 	{
 		List<String> result1=new ArrayList<String>();
 		String defendant=null;
 		try {
-			String word=LoadWord.LoadAllWord();
+			String word=LoadWord.LoadAllWord(title);
 			String[] wordlist=word.split("舟山市定海区人民检察院")[1].split("\n");
 			String[] wordlist2=word.split("判决如下：")[1].split("）");
 			for(int i=1;i<wordlist.length;i++)
@@ -88,12 +87,18 @@ public class LoadWord {
 	}
 	public static void main(String[] args)
 	{
-          List<String> result=new ArrayList<String>();
-          result=LoadWord.LoadDefendantWord();
-          for(String a:result)
-          {
-        	  System.out.println(a);
+         // List<String> result=new ArrayList<String>();
+          String result=null;
+		try {
+			result = LoadWord.LoadAllWord("D:\\Java高级\\舟山\\（2016）浙0902刑初00262号.doc");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        //  for(String a:result)
+        //  {
+        	  System.out.println(result);
         	  System.out.println("---------");
-          }
+         // }
 	}
 }

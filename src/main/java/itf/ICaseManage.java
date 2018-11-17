@@ -28,7 +28,6 @@ public interface ICaseManage {
 	 * @param c
 	 * @throws BaseException
 	 * 要求:
-	 * 先要遍历relation这个数据库，找到Bname是否有等于c.cid的，有的话，把获取所有对应的Aname的值
 	 * ，用searchDefendant(Aname)的方法找到list的列表然后用deleteDefendant()的方法删掉他们
 	 * 然后再删除数据删除数据
 	 */

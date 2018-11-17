@@ -5,60 +5,40 @@ public interface ICaseRegular {
 	 * 通过正则获得Cid
 	 * @return
 	 */
-	public String getCid();
+	public String getCid(String word);
+	/**
+	 * 通过正则获得判决年份
+	 * @return
+	 */
+	public String getCyear(String word);
 	/**
 	 * 通过正则获得CourtName
 	 * @return
 	 */
-  	public String getCourtName() ;
+  	public String getCourtName(String word) ;
   	/**
   	 * 通过正则获得NumberPeople
   	 * @return
   	 */
-  	public int getNumberPeople() ;
+  	public int getNumberPeople(String title) ;
   	/**
   	 * 通过正则获得MinAge
   	 * @return
   	 */
-  	public int getMinAge() ;
+  	public int getMinAge(String word);
   	/**
   	 * 通过正则获得FirstDefendant
   	 * @return
   	 */
-  	public String getFirstDefendant();
-  	/**
-  	 * 通过正则获得Crime
-  	 * @return
-  	 */
-  	public String getCrime();
-  	/**
-  	 * 通过正则获得PenaltyType
-  	 * @return
-  	 */
-  	public String getPenaltyType();
-  	/**
-  	 * 通过正则获得Sentence
-  	 * @return
-  	 */
-  	public String getSentence();
-  	/**
-  	 * 通过正则获得PropertyPenaltyType
-  	 * @return
-  	 */
-  	public String getPropertyPenaltyType();
-  	/**
-  	 * 通过正则获得PropertyPenaltyAmount
-  	 * @return
-  	 */
-  	public double getPropertyPenaltyAmount();
+  	public String getFirstDefendant(String word);
   	/**
   	 * 通过正则获得DrugTypeAndNumberOrUnit
   	 * @return
   	 */
-  	public String getDrugTypeAndNumberOrUnit();
+  	public String getDrugTypeAndNumberOrUnit(String word);
   	/**
   	 * 通过正则获得DrugPrice
   	 * @return
   	 */
-  	public String getDrugPrice();
+  	public String getDrugPrice(String word);
 }

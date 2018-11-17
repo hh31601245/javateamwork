@@ -2,7 +2,6 @@ package itf;
 
 import java.util.List;
 
-import model.Case;
 import model.Defendant;
 import util.BaseException;
 
@@ -21,16 +20,15 @@ public interface IDefendantManage {
 	 * loadAll
 	 * @return
 	 * @throws BaseException
-	 * 要求：
-	 * 通过查找Defendant表中Cid=c.cid的值然后输出
+	 * 要求：返回所有被告的信息
+	 * 要求用列表返回所有Defendant信息
 	 */
-	public List<Defendant> loadDefendant(Case c)throws BaseException;
+	public List<Defendant> loadAll()throws BaseException;
 	/**
 	 * deleteDefendant d
 	 * @param d
 	 * @throws BaseException
 	 * 要求:
-	 * 删除的同时，要遍历调用deleteRelation(Relation r) 把r.Aname等于d.dname的relation删掉
 	 * 同时将数据库Defendant中该数据之后的数据的Did都减一
 	 */
 	public void deleteDefendant(Defendant d)throws BaseException;
@@ -39,10 +37,10 @@ public interface IDefendantManage {
 	 * @param dname
 	 * @throws BaseException
 	 * 要求：
-	 * 如果dname不存在,显示该被告编号不存在
-	 * 存在的话,返回List<Defendant> 
+	 * 如果did不存在,显示该被告编号不存在
+	 * 存在的话,返回Defendant,返回该案件号下的嫌疑人  
 	 */
-	public List<Defendant> searchDefendant(String dname)throws BaseException;
+	public Defendant searchDefendant(String did)throws BaseException;
 	/**
 	 * modifyDefendant
 	 * @param d

@@ -12,65 +12,67 @@ import poi.LoadWord;
 public class CaseRegular implements ICaseRegular{
 
 	@Override
-	public String getCid() {
+	public String getCid(String word) {
 		// TODO Auto-generated method stub
 		String result=null;
-		try {
-			String word=LoadWord.LoadAllWord();
-			Pattern p=Pattern.compile("浙\\d+刑初\\d+号"); //括号里写正则表达式
-			Matcher m= p.matcher(word);  //括号里是目标字符串
-			while(m.find())
-			{
-				//System.out.println(m.group());
-				result=m.group();
-				break;
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		Pattern p=Pattern.compile("浙\\d+刑初\\d+号"); //括号里写正则表达式
+		Matcher m= p.matcher(word);  //括号里是目标字符串
+		while(m.find())
+		{
+			//System.out.println(m.group());
+			result=m.group();
+			break;
+		}
+		
+		return result;
+	}
+	@Override
+	public String getCyear(String word) {
+		// TODO Auto-generated method stub
+		String result=null;
+		Pattern p=Pattern.compile("（[\\d]+）浙\\d+刑初\\d+号"); //括号里写正则表达式
+		Matcher m= p.matcher(word);  //括号里是目标字符串
+		while(m.find())
+		{
+			//System.out.println(m.group());
+			result=m.group().split("浙")[0];
+			break;
+		}
+		
+		return result;
+	}
+	@Override
+	public String getCourtName(String word) {
+		// TODO Auto-generated method stub
+		String result=null;
+		Pattern p=Pattern.compile("公诉机关[\\u4e00-\\u9fa5]+");
+		Matcher m=p.matcher(word);
+		while(m.find())
+		{
+			//System.out.println(m.group());
+			result=m.group().split("公诉机关")[1];
+			break;
 		}
 		
 		return result;
 	}
 
 	@Override
-	public String getCourtName() {
-		// TODO Auto-generated method stub
-		String result=null;
-		try {
-			String word=LoadWord.LoadAllWord();
-			Pattern p=Pattern.compile("公诉机关[\\u4e00-\\u9fa5]+");
-			Matcher m=p.matcher(word);
-			while(m.find())
-			{
-				//System.out.println(m.group());
-				result=m.group().split("公诉机关")[1];
-				break;
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return result;
-	}
-
-	@Override
-	public int getNumberPeople() {
+	public int getNumberPeople(String title) {
 		// TODO Auto-generated method stub
 		int result=0;
-		List<String> word=LoadWord.LoadDefendantWord();
+		List<String> word=LoadWord.LoadDefendantWord(title);
 		result=word.size();
 		return result;
 	}
 
 	@Override
-	public int getMinAge() {
+	public int getMinAge(String title) {
 		// TODO Auto-generated method stub
 		int result=0;
 		int count=0;
 		String minbirthday= new String();
-		List<String> words=LoadWord.LoadDefendantWord();
+		List<String> words=LoadWord.LoadDefendantWord(title);
 		for(String word:words)
 		{
 			Pattern p=Pattern.compile("\\d{4}年\\d+月\\d+日[(出生)|(生)]+");
@@ -107,10 +109,10 @@ public class CaseRegular implements ICaseRegular{
 	}
 
 	@Override
-	public String getFirstDefendant() {
+	public String getFirstDefendant(String title) {
 		// TODO Auto-generated method stub
 		String result=null;
-		List<String> words=LoadWord.LoadDefendantWord();
+		List<String> words=LoadWord.LoadDefendantWord(title);
 		String word=words.get(0);
 		Pattern p=Pattern.compile("被告人[\u4e00-\u9fa5]+");
 		Matcher m=p.matcher(word);
@@ -119,163 +121,6 @@ public class CaseRegular implements ICaseRegular{
 			//System.out.println(m.group());
 			result=m.group().split("被告人")[1];
 			break;
-		}
-		return result;
-	}
-
-	@Override
-	public String getCrime() {
-		// TODO Auto-generated method stub
-		String result=null;
-		List<String> words=LoadWord.LoadDefendantWord();
-		String word=words.get(0).split("一、")[1];
-		Pattern p=Pattern.compile("犯[\\u4e00-\\u9fa5]+罪");
-		Matcher m=p.matcher(word);
-		while(m.find())
-		{
-			//System.out.println(m.group());
-			//System.out.println(m.group());
-			if(result==null)
-			{
-				result=m.group().split("犯")[1];
-			}
-			else
-			{
-				result=result+" / "+m.group().split("犯")[1];
-			}
-		}
-		return result;
-	}
-
-	@Override
-	public String getPenaltyType() {
-		// TODO Auto-generated method stub
-		String result=null;
-		List<String> words=LoadWord.LoadDefendantWord();
-		String word0=words.get(0);
-		String word=word0.split("一、")[1];
-		//System.out.println(word);
-		if(word.contains("数罪并罚"))
-		{
-			Pattern p=Pattern.compile("决定执行[\\u4e00-\\u9fa5]+刑");
-			Matcher m=p.matcher(word);
-			while(m.find())
-			{
-				//System.out.println(m.group());
-				result=m.group().split("决定执行")[1];
-				break;
-			}
-		}
-		else
-		{
-			Pattern p=Pattern.compile("判处[\\u4e00-\\u9fa5]+刑");
-			Matcher m=p.matcher(word);
-			while(m.find())
-			{
-				//System.out.println(m.group());
-				result=m.group().split("判处")[1];
-				break;
-			}
-		}
-		return result;
-	}
-
-	@Override
-	public String getSentence() {
-		// TODO Auto-generated method stub
-		String result=null;
-		List<String> words=LoadWord.LoadDefendantWord();
-		String word0=words.get(0);
-		String word=word0.split("一、")[1];
-		//System.out.println(word);
-		if(word.contains("数罪并罚"))
-		{
-			Pattern p=Pattern.compile("决定执行[\\u4e00-\\u9fa5]+");
-			Matcher m=p.matcher(word);
-			while(m.find())
-			{
-				//System.out.println(m.group());
-				result=m.group().split("刑")[1];
-				break;
-			}
-		}
-		else
-		{
-			Pattern p=Pattern.compile("判处[\\u4e00-\\u9fa5]+");
-			Matcher m=p.matcher(word);
-			while(m.find())
-			{
-				//System.out.println(m.group());
-				result=m.group().split("刑")[1];
-				break;
-			}
-		}
-		return result;
-	}
-
-	@Override
-	public String getPropertyPenaltyType() {
-		// TODO Auto-generated method stub
-		String result=null;
-		List<String> words=LoadWord.LoadDefendantWord();
-		String word0=words.get(0);
-		String word=word0.split("一、")[1];
-		if(word.contains("数罪并罚"))
-		{
-			String word1=word.split("数罪并罚")[1];
-			Pattern p=Pattern.compile("并处[\\u4e00-\\u9fa5]+人民币");
-			Matcher m=p.matcher(word1);
-			while(m.find())
-			{
-				//System.out.println(m.group());
-				result=m.group().split("并处")[1].split("人民币")[0];
-				break;
-			}
-		}
-		else
-		{
-			Pattern p=Pattern.compile("并处[\\u4e00-\\u9fa5]+人民币");
-			Matcher m=p.matcher(word);
-			while(m.find())
-			{
-				//System.out.println(m.group());
-				result=m.group().split("并处")[1].split("人民币")[0];
-				break;
-			}
-		}
-		return result;
-	}
-
-	@Override
-	public double getPropertyPenaltyAmount() {
-		// TODO Auto-generated method stub
-		double result=0;
-		List<String> words=LoadWord.LoadDefendantWord();
-		String word0=words.get(0);
-		String word=word0.split("一、")[1];
-		//System.out.println(word);
-		if(word.contains("数罪并罚"))
-		{
-			String word1=word.split("数罪并罚")[1];
-			Pattern p=Pattern.compile("并处[\\u4e00-\\u9fa5]+人民币[\\d\\u4e00-\\u9fa5]+");
-			Matcher m=p.matcher(word1);
-			while(m.find())
-			{
-				//System.out.println(m.group());
-				result=chineseNumber2Double(m.group().split("人民币")[1]);
-				break;
-			}
-		}
-		else
-		{
-			Pattern p=Pattern.compile("并处[\\u4e00-\\u9fa5]+人民币[\\d\\u4e00-\\u9fa5]+");
-			Matcher m=p.matcher(word);
-			while(m.find())
-			{
-				//System.out.println(m.group());
-				result=chineseNumber2Double(m.group().split("人民币")[1]);
-				break;
-			}
 		}
 		return result;
 	}
@@ -334,52 +179,46 @@ public class CaseRegular implements ICaseRegular{
         return result;
     }
 	@Override
-	public String getDrugTypeAndNumberOrUnit() {
+	public String getDrugTypeAndNumberOrUnit(String word) {
 		// TODO Auto-generated method stub
 		String result=null;
-		String word;
 		String word1;
 		int count=0;
-		try {
-			word = LoadWord.LoadAllWord().split("经审理查明")[1];
-			if(word.contains("上述事实"))
+		word = word.split("经审理查明")[1];
+		if(word.contains("上述事实"))
+		{
+			word1=word.split("上述事实")[0];
+		}
+		else
+		{
+			word1=word.split("以上事实")[0];
+		}
+		Pattern p=Pattern.compile("将[\\d\\u4e00-\\u9fa5、，.]+");
+		Matcher m=p.matcher(word1);
+		while(m.find())
+		{
+			//System.out.println(m.group());
+			String content=m.group().split("将")[1].split("贩卖")[0]+"共"+m.group().split("人民币")[1];
+			
+			if(content.contains("片剂"))
 			{
-				word1=word.split("上述事实")[0];
+				content=unitConvert(content);  //将片剂的单位转成克
 			}
+			if(count==0)
+			{
+				result=content;
+			}
+			//System.out.println(m.group());
 			else
 			{
-				word1=word.split("以上事实")[0];
+				if(result.contains(content)==false)
+				{
+			        result=result+"/"+content;
+				}
 			}
-			Pattern p=Pattern.compile("将[\\d\\u4e00-\\u9fa5、，.]+");
-			Matcher m=p.matcher(word1);
-			while(m.find())
-			{
-				//System.out.println(m.group());
-				String content=m.group().split("将")[1].split("贩卖")[0]+"共"+m.group().split("人民币")[1];
-				
-				if(content.contains("片剂"))
-				{
-					content=unitConvert(content);  //将片剂的单位转成克
-				}
-				if(count==0)
-				{
-					result=content;
-				}
-				//System.out.println(m.group());
-				else
-				{
-					if(result.contains(content)==false)
-					{
-				        result=result+"/"+content;
-					}
-				}
-				count++;
-			}
-			//System.out.println(word1);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			count++;
 		}
+		//System.out.println(word1);
 //		Pattern p=Pattern.compile("被告人[\\u4e00-\\u9fa5]+犯[\\u4e00-\\u9fa5]+罪");
 //		Matcher m=p.matcher(word);
 //		while(m.find())
@@ -488,9 +327,6 @@ public class CaseRegular implements ICaseRegular{
      public static void main(String[] args)
      {
     	 CaseRegular c=new CaseRegular();
-    	 String result=c.getCrime();
-    	 double result1=c.getPropertyPenaltyAmount();
-    	System.out.println(result);
      }
      
 }
