@@ -134,30 +134,31 @@ public class FrmLoad extends JDialog implements ActionListener{
 		    JFileChooser jf=new JFileChooser();
 		    jf.showOpenDialog(this);
 		    File f=jf.getSelectedFile();
-		    String s=f.getAbsolutePath();
+		    String jurl=f.getAbsolutePath();
+		    String jtitle=null;
 		    String content=null;
 		    Judgment j=new Judgment();
 		    try {
-				content=LoadWord.LoadAllWord(s);
+				content=LoadWord.LoadAllWord(jurl);
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		    //s=s.split("\\")[s.split("\\").length-1];
 				Pattern p=Pattern.compile("浙\\d+刑初\\d+号"); //括号里写正则表达式
-				Matcher m= p.matcher(s);  //括号里是目标字符串
+				Matcher m= p.matcher(jurl);  //括号里是目标字符串
 				while(m.find())
 				{
 					//System.out.println(m.group());
-					s=m.group();
+					jtitle=m.group();
 					break;
 				}
-				System.out.println(s);
-		    j.setTitle(s);
+				System.out.println(jurl);
+		    j.setTitle(jtitle);
 		    j.setContent(content);
 		    Util.judgmentmanage.addJudgment(j);
-		    Leading_in.Leading_in_Case(s);
-		    Leading_in.Leading_in_Defendant(s);
+		    Leading_in.Leading_in_Case(jurl,jtitle);
+		    Leading_in.Leading_in_Defendant(jurl,jtitle);
 		    this.Reload();
 		}else if(e.getSource()==this.btnOk)
 		{

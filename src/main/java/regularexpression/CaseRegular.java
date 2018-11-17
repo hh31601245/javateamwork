@@ -12,18 +12,9 @@ import poi.LoadWord;
 public class CaseRegular implements ICaseRegular{
 
 	@Override
-	public String getCid(String word) {
+	public String getCid(String title) {
 		// TODO Auto-generated method stub
-		String result=null;
-		Pattern p=Pattern.compile("浙\\d+刑初\\d+号"); //括号里写正则表达式
-		Matcher m= p.matcher(word);  //括号里是目标字符串
-		while(m.find())
-		{
-			//System.out.println(m.group());
-			result=m.group();
-			break;
-		}
-		
+		String result=title;
 		return result;
 	}
 	@Override
@@ -58,21 +49,21 @@ public class CaseRegular implements ICaseRegular{
 	}
 
 	@Override
-	public int getNumberPeople(String title) {
+	public int getNumberPeople(String url) {
 		// TODO Auto-generated method stub
 		int result=0;
-		List<String> word=LoadWord.LoadDefendantWord(title);
+		List<String> word=LoadWord.LoadDefendantWord(url);
 		result=word.size();
 		return result;
 	}
 
 	@Override
-	public int getMinAge(String title) {
+	public int getMinAge(String url) {
 		// TODO Auto-generated method stub
 		int result=0;
 		int count=0;
 		String minbirthday= new String();
-		List<String> words=LoadWord.LoadDefendantWord(title);
+		List<String> words=LoadWord.LoadDefendantWord(url);
 		for(String word:words)
 		{
 			Pattern p=Pattern.compile("\\d{4}年\\d+月\\d+日[(出生)|(生)]+");
@@ -109,10 +100,10 @@ public class CaseRegular implements ICaseRegular{
 	}
 
 	@Override
-	public String getFirstDefendant(String title) {
+	public String getFirstDefendant(String url) {
 		// TODO Auto-generated method stub
 		String result=null;
-		List<String> words=LoadWord.LoadDefendantWord(title);
+		List<String> words=LoadWord.LoadDefendantWord(url);
 		String word=words.get(0);
 		Pattern p=Pattern.compile("被告人[\u4e00-\u9fa5]+");
 		Matcher m=p.matcher(word);
@@ -202,7 +193,7 @@ public class CaseRegular implements ICaseRegular{
 			
 			if(content.contains("片剂"))
 			{
-				content=unitConvert(content);  //将片剂的单位转成克
+				content=unitConvert(content,word);  //将片剂的单位转成克
 			}
 			if(count==0)
 			{
@@ -229,10 +220,9 @@ public class CaseRegular implements ICaseRegular{
 //		}
 		return result;
 	}
-    public String unitConvert(String content)
+    public String unitConvert(String content,String word)
     {
     	//String result=null;
-    	String word;
 		String word1;
 		String oldnumber=null;
 		String newnumber=null;
@@ -244,47 +234,41 @@ public class CaseRegular implements ICaseRegular{
 			oldnumber=m.group();
 			//System.out.println(oldnumber);
 		}
-		try {
-				word = LoadWord.LoadAllWord().split("经审理查明")[1];
-				if(word.contains("上述事实"))
-				{
-					word1=word.split("上述事实")[0];
-				}
-				else
-				{
-					word1=word.split("以上事实")[0];
-				}
-				p=Pattern.compile("每粒[\\d\\u4e00-\\u9fa5.]+");
-				m=p.matcher(word1);
-				while(m.find())
-				{
-					Pattern p1=Pattern.compile("[\\d.]+");
-					Matcher m1=p1.matcher(m.group());
-					//System.out.println(m.group());
-					while(m1.find())
-					{
-						newnumber=String.valueOf(Integer.valueOf(oldnumber.split("粒")[0])*Double.valueOf(m1.group()));
-						
-					}
-					newnumber=newnumber+"克";
-					//System.out.println(newnumber);
-					content=content.replace(oldnumber,newnumber);
-				}
-		}catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(word.contains("上述事实"))
+		{
+			word1=word.split("上述事实")[0];
+		}
+		else
+		{
+			word1=word.split("以上事实")[0];
+		}
+		p=Pattern.compile("每粒[\\d\\u4e00-\\u9fa5.]+");
+		m=p.matcher(word1);
+		while(m.find())
+		{
+			Pattern p1=Pattern.compile("[\\d.]+");
+			Matcher m1=p1.matcher(m.group());
+			//System.out.println(m.group());
+			while(m1.find())
+			{
+				newnumber=String.valueOf(Integer.valueOf(oldnumber.split("粒")[0])*Double.valueOf(m1.group()));
+				
+			}
+			newnumber=newnumber+"克";
+			//System.out.println(newnumber);
+			content=content.replace(oldnumber,newnumber);
 		}
 		
 		return content;
     }
 	@Override
-	public String getDrugPrice() {
+	public String getDrugPrice(String word) {
 		// TODO Auto-generated method stub
 		String result=null;
 		double price=0;
 		double number=0;
 		double sumprice=0;
-		String[] sumPrices=this.getDrugTypeAndNumberOrUnit().split("/");
+		String[] sumPrices=this.getDrugTypeAndNumberOrUnit(word).split("/");
 		//System.out.println(this.getDrugTypeAndNumberOrUnit().split("/")[0]);
 		for(int i=0;i<sumPrices.length;i++)
 		{

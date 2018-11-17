@@ -10,17 +10,18 @@ import util.BaseException;
 import begin.Util;
 //import mysql.DefendantManage;
 public class Leading_in {  //单纯只是把word的数据存到数据库中
-	public static void Leading_in_Case(String title)
+	public static void Leading_in_Case(String url,String title)
 	{
 		CaseRegular caseregular=new CaseRegular();
+		String casewords=null;
 		try {
-			String casewords=LoadWord.LoadAllWord(title);
+			casewords=LoadWord.LoadAllWord(url);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		Case c=new Case(caseregular.getCid(casewords),caseregular.getCyear(casewords),caseregular.getCourtName(casewords),caseregular.getNumberPeople(title)
-				,caseregular.getMinAge(casewords),caseregular.getFirstDefendant(casewords),caseregular.getDrugTypeAndNumberOrUnit(casewords)
+		Case c=new Case(caseregular.getCid(title),caseregular.getCyear(casewords),caseregular.getCourtName(casewords),caseregular.getNumberPeople(url)
+				,caseregular.getMinAge(url),caseregular.getFirstDefendant(url),caseregular.getDrugTypeAndNumberOrUnit(casewords)
 				,caseregular.getDrugPrice(casewords));
 		try {
 			Util.casemanage.addCase(c);
@@ -29,18 +30,18 @@ public class Leading_in {  //单纯只是把word的数据存到数据库中
 			e.printStackTrace();
 		}
 	}
-	public static void Leading_in_Defendant(String title)
+	public static void Leading_in_Defendant(String url,String title)
 	{
 		//String 
 //		DefendantRegular defendantregular=new DefendantRegular();
 //		Defendant d=new Defendant(defendantregular)
 		List<String> defendantwords=new ArrayList<String>();
 		CaseRegular caseregular=new CaseRegular();
-		defendantwords=LoadWord.LoadDefendantWord(title);
+		defendantwords=LoadWord.LoadDefendantWord(url);
 		for(String defendantword:defendantwords)
 		{
 			DefendantRegular defendantregular=new DefendantRegular();
-			Defendant d=new Defendant(defendantregular.getDid(),defendantregular.getDname(defendantword),defendantregular.getSex(defendantword),
+			Defendant d=new Defendant(defendantregular.getDid(title),defendantregular.getDname(defendantword),defendantregular.getSex(defendantword),
 					defendantregular.getAge(defendantword),defendantregular.getDateOfBrith(defendantword),defendantregular.getEducation(defendantword),
 					defendantregular.getCrime(defendantword),defendantregular.getPenaltyType(defendantword),defendantregular.getSentence(defendantword),
 					defendantregular.getPropertyPenaltyType(defendantword),defendantregular.getPropertyPenaltyAmount(defendantword),

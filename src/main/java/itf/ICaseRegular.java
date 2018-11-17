@@ -20,17 +20,17 @@ public interface ICaseRegular {
   	 * 通过正则获得NumberPeople
   	 * @return
   	 */
-  	public int getNumberPeople(String title) ;
+  	public int getNumberPeople(String url) ;
   	/**
   	 * 通过正则获得MinAge
   	 * @return
   	 */
-  	public int getMinAge(String word);
+  	public int getMinAge(String url);
   	/**
   	 * 通过正则获得FirstDefendant
   	 * @return
   	 */
-  	public String getFirstDefendant(String word);
+  	public String getFirstDefendant(String url);
   	/**
   	 * 通过正则获得DrugTypeAndNumberOrUnit
   	 * @return

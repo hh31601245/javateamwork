@@ -9,7 +9,7 @@ public interface IDefendantRegular {
 	 * 用正则获取该Cid下的Did
 	 * @return
 	 */
-	public String getDid();
+	public String getDid(String title);
 	/**
 	 * 用正则获取该Cid和Did下的Dname
 	 * @return

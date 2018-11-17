@@ -17,18 +17,17 @@ import java.util.regex.Pattern;
 import begin.Util;
 public class DefendantRegular implements IDefendantRegular{
     
-	public String getCid()
+	public String getCid(String title)
 	{
-		CaseRegular caseregular=new CaseRegular();
-		String result=caseregular.getCid();
+		String result=title;
 		return result;
 	}
 	@Override
-	public String getDid() {  //引用数据库
+	public String getDid(String title) {  //引用数据库
 		// TODO Auto-generated method stub
 		List<Defendant> defendantlist=new ArrayList<Defendant>();
 		try {
-			defendantlist=Util.defendantmanage.loadDefendant(Util.casemanage.searchCase(this.getCid()));
+			defendantlist=Util.defendantmanage.loadDefendant(Util.casemanage.searchCase(title));
 		} catch (BaseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -313,7 +312,7 @@ public class DefendantRegular implements IDefendantRegular{
 	    }
 	public static void main(String[] args)
 	{
-		List<String> defendantwords=new ArrayList<String>();
+	/*	List<String> defendantwords=new ArrayList<String>();
 		CaseRegular caseregular=new CaseRegular();
 		defendantwords=LoadWord.LoadDefendantWord();
 		for(String defendantword:defendantwords)
@@ -321,7 +320,7 @@ public class DefendantRegular implements IDefendantRegular{
 			DefendantRegular defendantregular=new DefendantRegular();
 			System.out.println(defendantregular.getPropertyPenaltyAmount(defendantword));
 			System.out.println("------------------");
-		}
+		}*/
 	}
 
 }
