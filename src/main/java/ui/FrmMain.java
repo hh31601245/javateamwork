@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -35,8 +36,11 @@ public class FrmMain extends JFrame implements ActionListener
 	//private JMenu menu_deletecase=new JMenu("删除案例");
 	//private JMenu menu_deletedefendant=new JMenu("删除被告");
 	private JMenu menu_statistics =new JMenu("统计");
+	private JMenuItem menuitem_statistics=new JMenuItem("统计");
 	private JMenu menu_load_out=new JMenu("导出");
+	private JMenuItem menuitem_load_out=new JMenuItem("导出");
 	private JMenu menu_neo4j=new JMenu("生成Neo4j");
+	private JMenuItem menuitem_neo4j=new JMenuItem("生成Neo4j");
 	private FrmLoad dlgLoad=null;
 	private FrmStatistics dlgStatistics=null;
 	private JPanel statusBar=new JPanel();
@@ -141,17 +145,20 @@ public class FrmMain extends JFrame implements ActionListener
 		dlgLoad.setVisible(true);
 		//this.menu_add.addActionListener(this);
 		//this.menu_deletecase.addActionListener(this);
-		//this.menu_deletedefendant.addActionListener(this);
-		this.menu_statistics.addActionListener(this);
-		this.menu_load_out.addActionListener(this);
-		this.menu_neo4j.addActionListener(this);
+		//this.menu_deletedefendant.addActionListener(this);		
 		//menubar.add(menu_add);
 		//menubar.add(menu_deletecase);
 		//menubar.add(menu_deletedefendant);
 		//menubar.add(menu_showdefendant);
+		this.menu_statistics.add(menuitem_statistics);
+		this.menu_load_out.add(menuitem_load_out);
+		this.menu_neo4j.add(menuitem_neo4j);
 		menubar.add(menu_statistics);
 		menubar.add(menu_load_out);
 		menubar.add(menu_neo4j);
+		this.menuitem_statistics.addActionListener(this);
+		this.menuitem_load_out.addActionListener(this);
+		this.menuitem_neo4j.addActionListener(this);
 		this.setJMenuBar(menubar);
 		this.getContentPane().add(new JScrollPane(this.dataTableCase),BorderLayout.NORTH);
 		this.dataTableCase.addMouseListener(new MouseAdapter() {
@@ -187,16 +194,19 @@ public class FrmMain extends JFrame implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getSource()==this.menu_statistics)
+		if(e.getSource()==this.menuitem_statistics)
 		{
-			this.dlgStatistics=new FrmStatistics(Case.caselist);
+			System.out.println(123);
+			//this.setVisible(false);
+			this.dlgStatistics=new FrmStatistics(this,"统计",true,Case.caselist);
 			this.dlgStatistics.setVisible(true);
+			//this.setVisible(true);
 		}
-		else if(e.getSource()==this.menu_load_out)
+		else if(e.getSource()==this.menuitem_load_out)
 		{
 			
 		}
-		else if(e.getSource()==this.menu_neo4j)
+		else if(e.getSource()==this.menuitem_neo4j)
 		{
 			
 		}

@@ -164,6 +164,7 @@ public class FrmLoad extends JDialog implements ActionListener{
 		    this.Reload();
 		}else if(e.getSource()==this.btnOk)
 		{
+			System.out.println(123);
 			int[] indices = list.getSelectedIndices();
             // 获取选项数据的 ListModel
             ListModel<String> listModel = list.getModel();

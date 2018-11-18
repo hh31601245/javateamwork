@@ -6,12 +6,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 //import cn.edu.zucc.personplan.util.DbException;
 import itf.ICaseManage;
 import model.*;
 import util.BaseException;
 import util.DBUtil;
+import util.DbException;
 import mysql.DefendantManage;
 public class CaseManage implements ICaseManage{
 
@@ -247,5 +249,46 @@ public class CaseManage implements ICaseManage{
 		}
 		
 
+	}
+	public Map<String,Integer> StatisticsCase(Case c,String condidant)
+	{
+		Map<String,Integer> result=null;
+		Connection conn=null;
+		try
+		{
+			conn=DBUtil.getConnection();
+			String sql="select ?,count(*) from Defendant where cid=? group by ?";
+			java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+			pst.setString(1,condidant);			
+			pst.setString(2,c.getCid());
+			pst.setString(3,condidant);
+			java.sql.ResultSet rs=pst.executeQuery();
+			if(rs.next())
+			{
+				result.put(rs.getString(1),rs.getInt(2));
+			}
+		}catch(SQLException e)
+		{
+			e.printStackTrace();
+			try {
+				throw new DbException(e);
+			} catch (DbException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}finally
+		{
+			if(conn!=null)
+			{
+				try
+				{
+					conn.close();
+				}catch(SQLException e)
+				{
+					e.printStackTrace();
+				}
+			}
+		}
+		return result;
 	}
 }

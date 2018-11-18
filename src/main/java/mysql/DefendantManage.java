@@ -3,27 +3,32 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import itf.IDefendantManage;
 import model.Case;
 import model.Defendant;
 import util.BaseException;
 import util.DBUtil;
+import util.DbException;
+
 import java.text.NumberFormat;
 public class DefendantManage implements IDefendantManage{
 
 	public static void main(String[] args) throws BaseException {
 		// TODO Auto-generated method stub
-		Case c = new Case(); //填入一些值
-		Defendant d = new Defendant("003", "A", "男", 0, null, null, null, null, null, null, 0, null); 
-		DefendantManage test = new DefendantManage();
-		test.addDefendant(d);
+		//Case c = new Case(); //填入一些值
+		//Defendant d = new Defendant("003", "A", "男", 0, null, null, null, null, null, null, 0, null); 
+		//DefendantManage test = new DefendantManage();
+		//test.addDefendant(d);
 		//test.loadDefendant(c);
 		//test.searchDefendant("002");
 		//test.modifyDefendant(d);  
 		//test.loadAll();
 		//test.deleteDefendant(d);
+		//begin.Util.defendantmanage.StatisticsDefendant("浙0902刑初00262号","Sex");
 	}
 	/**
 	 * addDefendant
@@ -295,6 +300,55 @@ public class DefendantManage implements IDefendantManage{
 		}
 		return result;
 		
+	}
+	public Map<String,Integer> StatisticsDefendantSex(Case c)
+	{
+		Map<String,Integer> result=new HashMap<String,Integer>();
+		Connection conn=null;
+		try
+		{
+			conn=DBUtil.getConnection();
+			String sql="select Sex,count(*) from defendant where cid=? group by Sex";
+			java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+			//pst.setString(1,condidant);			
+			pst.setString(1,c.getCid());
+			//pst.setString(2,condidant);
+			java.sql.ResultSet rs=pst.executeQuery();
+			while(rs.next())
+			{
+				
+				String sex=rs.getString(1);
+				Integer count=rs.getInt(2);
+				System.out.println(sex+" "+count);
+				result.put(sex,count);
+			}
+		}catch(SQLException e)
+		{
+			e.printStackTrace();
+			try {
+				throw new DbException(e);
+			} catch (DbException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}finally
+		{
+			if(conn!=null)
+			{
+				try
+				{
+					conn.close();
+				}catch(SQLException e)
+				{
+					e.printStackTrace();
+				}
+			}
+		}
+		for (String key : result.keySet()) {  //通过foreach方法来遍历
+
+		       System.out.println("key= "+ key + " and value= " + result.get(key));
+		      }
+		return result;
 	}
 
 }
