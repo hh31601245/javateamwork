@@ -1,5 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 
  * @author Administrator
@@ -26,17 +29,17 @@ public class Case {
 			return this.getCid();
 		}else if(col==1) {
 			return this.getCyear();
-		}else if(col==1) {
+		}else if(col==2) {
 			return this.getCourtName();
-		} else if(col==2) {
-			return String.valueOf(this.getNumberPeople());
 		} else if(col==3) {
-			return String.valueOf(this.getMinAge());
+			return String.valueOf(this.getNumberPeople());
 		} else if(col==4) {
-			return this.getFirstDefendant();
+			return String.valueOf(this.getMinAge());
 		} else if(col==5) {
-			return this.getDrugTypeAndNumberOrUnit();
+			return this.getFirstDefendant();
 		} else if(col==6) {
+			return this.getDrugTypeAndNumberOrUnit();
+		} else if(col==7) {
 			return this.getDrugPrice();
 		} else {
 			return "";
@@ -113,6 +116,6 @@ public class Case {
 	public void setDrugPrice(String drugPrice) {
 		DrugPrice = drugPrice;
 	}
-	
+	public static List<Case> caselist=new ArrayList<Case>();
 
 }

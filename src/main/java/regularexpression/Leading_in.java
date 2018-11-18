@@ -20,9 +20,18 @@ public class Leading_in {  //单纯只是把word的数据存到数据库中
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		Case c=new Case(caseregular.getCid(title),caseregular.getCyear(casewords),caseregular.getCourtName(casewords),caseregular.getNumberPeople(url)
+	/*	Case c=new Case(caseregular.getCid(title),caseregular.getCyear(casewords),caseregular.getCourtName(casewords),caseregular.getNumberPeople(url)
 				,caseregular.getMinAge(url),caseregular.getFirstDefendant(url),caseregular.getDrugTypeAndNumberOrUnit(casewords)
-				,caseregular.getDrugPrice(casewords));
+				,caseregular.getDrugPrice(casewords));*/
+		Case c=new Case();
+		c.setCid(caseregular.getCid(title));
+		c.setCourtName(caseregular.getCourtName(casewords));
+		c.setCyear(caseregular.getCyear(casewords));
+		c.setDrugPrice(caseregular.getDrugPrice(casewords));
+		c.setDrugTypeAndNumberOrUnit(caseregular.getDrugTypeAndNumberOrUnit(casewords));
+		c.setFirstDefendant(caseregular.getFirstDefendant(url));
+		c.setMinAge(caseregular.getMinAge(url));
+		c.setNumberPeople(caseregular.getNumberPeople(url));
 		try {
 			Util.casemanage.addCase(c);
 		} catch (BaseException e) {

@@ -64,7 +64,7 @@ public class LoadWord {
 		String defendant=null;
 		try {
 			String word=LoadWord.LoadAllWord(title);
-			String[] wordlist=word.split("舟山市定海区人民检察院")[1].split("\n");
+			String[] wordlist=word.split("检察院")[1].split("\n");
 			String[] wordlist2=word.split("判决如下：")[1].split("）");
 			for(int i=1;i<wordlist.length;i++)
 			{

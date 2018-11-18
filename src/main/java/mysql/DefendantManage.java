@@ -101,7 +101,7 @@ public class DefendantManage implements IDefendantManage{
 		// TODO Auto-generated method stub
 		List<Defendant> result =new ArrayList<>();
 		Connection conn=null;
-		Defendant d = new Defendant();
+		Defendant d = null;
 		try {
 			conn = DBUtil.getConnection();
 			String sql = "select * from defendant where Cid = ?";
@@ -109,6 +109,7 @@ public class DefendantManage implements IDefendantManage{
 			pst.setString(1, c.getCid());
 			ResultSet rs = pst.executeQuery();
 			while(rs.next()) {
+				d=new Defendant();
 				d.setDid(rs.getString(1));
 				d.setDname(rs.getString(2));
 				d.setSex(rs.getString(3));

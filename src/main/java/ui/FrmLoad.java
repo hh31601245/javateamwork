@@ -27,9 +27,11 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import model.Case;
 import model.Judgment;
 import poi.LoadWord;
 import regularexpression.Leading_in;
+import util.BaseException;
 import mysql.JudgmentManage;
 import begin.Util;
 public class FrmLoad extends JDialog implements ActionListener{
@@ -64,10 +66,10 @@ public class FrmLoad extends JDialog implements ActionListener{
 			list.setListData(titiles);
 		}
 	}
-	//public FrmLoad(Frame f,String s,boolean b)
-	public FrmLoad()//测试用
+	public FrmLoad(Frame f,String s,boolean b)
+	//public FrmLoad()//测试用
 	{
-		//super(f,s,b);
+		super(f,s,b);
 		//super();
 		toolBar.setLayout(new FlowLayout(FlowLayout.CENTER));
 		toolBar.add(this.btnLoad);
@@ -167,6 +169,14 @@ public class FrmLoad extends JDialog implements ActionListener{
             ListModel<String> listModel = list.getModel();
             // 输出选中的选项
             for (int index : indices) {
+            	Case caseitem=null;
+				try {
+					caseitem = Util.casemanage.searchCase(listModel.getElementAt(index));
+					Case.caselist.add(caseitem);
+				} catch (BaseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
                 
             }
 		//	Leading_in.Leading_in_Case();
@@ -195,8 +205,8 @@ public class FrmLoad extends JDialog implements ActionListener{
 	}
 	public static void main(String[] args)
 	{
-		FrmLoad f=new FrmLoad();
-		f.setVisible(true);
+		//FrmLoad f=new FrmLoad();
+		//f.setVisible(true);
 		
 	}
 }

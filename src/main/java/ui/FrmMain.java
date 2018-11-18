@@ -31,15 +31,14 @@ public class FrmMain extends JFrame implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
 	private JMenuBar menubar=new JMenuBar();
-	private JMenu menu_add=new JMenu("添加新案例");
-	private JMenu menu_showcase=new JMenu("显示案例信息");
-	//private JMenu menu_showdefendant=new JMenu("显示被告信息");
-	private JMenu menu_deletecase=new JMenu("删除案例");
-	private JMenu menu_deletedefendant=new JMenu("删除被告");
-	private JMenu menu_deleterelation=new JMenu("删除联系");
-	private JMenu menu_showrelation=new JMenu("显示关系");
+	//private JMenu menu_add=new JMenu("添加新案例");
+	//private JMenu menu_deletecase=new JMenu("删除案例");
+	//private JMenu menu_deletedefendant=new JMenu("删除被告");
+	private JMenu menu_statistics =new JMenu("统计");
+	private JMenu menu_load_out=new JMenu("导出");
 	private JMenu menu_neo4j=new JMenu("生成Neo4j");
 	private FrmLoad dlgLoad=null;
+	private FrmStatistics dlgStatistics=null;
 	private JPanel statusBar=new JPanel();
 	
 	private Object tblCaseTitle[]=Case.TABLE_TITLE;
@@ -68,14 +67,7 @@ public class FrmMain extends JFrame implements ActionListener
 	int Caseid=0;
 	private void reloadCaseTable()  //相当于刷新案件
 	{
-		try
-		{
-			allCase=Util.casemanage.loadAll();
-			
-		}catch (BaseException e) {
-			JOptionPane.showMessageDialog(null, e.getMessage(), "错误",JOptionPane.ERROR_MESSAGE);
-			return;
-		}
+		allCase=Case.caselist;
 		tblCaseData=new Object[allCase.size()][Case.TABLE_TITLE.length];
 		for(int i=0;i<allCase.size();i++)
 		{
@@ -97,9 +89,11 @@ public class FrmMain extends JFrame implements ActionListener
 			return;
 		}
 		curCase=allCase.get(CaseId);
+		System.out.println(curCase.getCid());
 		try
 		{
 			allDefendant=Util.defendantmanage.loadDefendant(curCase);
+			System.out.println(allDefendant.get(0).getDname());
 		}catch (BaseException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "错误",JOptionPane.ERROR_MESSAGE);
 			return;
@@ -110,6 +104,7 @@ public class FrmMain extends JFrame implements ActionListener
 			for(int j=0;j<Defendant.TABLE_TITLE.length;j++)
 			{
 				tblDefendantData[i][j]=allDefendant.get(i).getCell(j);
+				//System.out.println(allDefendant.get(i).getCell(j));
 			}
 		}
 		tblDefendantModel.setDataVector(tblDefendantData,tblDefendantTitle);
@@ -144,23 +139,20 @@ public class FrmMain extends JFrame implements ActionListener
 		this.setTitle("knowledgemap");
 		dlgLoad=new FrmLoad(this,"加载",true);
 		dlgLoad.setVisible(true);
-		this.menu_add.addActionListener(this);
-		this.menu_showcase.addActionListener(this);
-		this.menu_deletecase.addActionListener(this);
-		this.menu_deletedefendant.addActionListener(this);
-		this.menu_deleterelation.addActionListener(this);
-		this.menu_showrelation.addActionListener(this);
-		//this.menu_showdefendant.addActionListener(this);
+		//this.menu_add.addActionListener(this);
+		//this.menu_deletecase.addActionListener(this);
+		//this.menu_deletedefendant.addActionListener(this);
+		this.menu_statistics.addActionListener(this);
+		this.menu_load_out.addActionListener(this);
 		this.menu_neo4j.addActionListener(this);
-		menubar.add(menu_add);
-		menubar.add(menu_showcase);
-		menubar.add(menu_showrelation);
-		menubar.add(menu_deletecase);
-		menubar.add(menu_deletedefendant);
-		menubar.add(menu_deleterelation);
+		//menubar.add(menu_add);
+		//menubar.add(menu_deletecase);
+		//menubar.add(menu_deletedefendant);
 		//menubar.add(menu_showdefendant);
+		menubar.add(menu_statistics);
+		menubar.add(menu_load_out);
 		menubar.add(menu_neo4j);
-		
+		this.setJMenuBar(menubar);
 		this.getContentPane().add(new JScrollPane(this.dataTableCase),BorderLayout.NORTH);
 		this.dataTableCase.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e)
@@ -176,7 +168,7 @@ public class FrmMain extends JFrame implements ActionListener
 		}
 		);
 		
-		this.getContentPane().add(new JScrollPane(this.dataTableDefendant),BorderLayout.SOUTH);
+		this.getContentPane().add(new JScrollPane(this.dataTableDefendant),BorderLayout.CENTER);
 		this.reloadCaseTable();
 		statusBar.setLayout(new FlowLayout(FlowLayout.LEFT));
 		JLabel jlable=new JLabel("knowledgemap");
@@ -195,7 +187,20 @@ public class FrmMain extends JFrame implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getSource()==this.menu_add)
+		if(e.getSource()==this.menu_statistics)
+		{
+			this.dlgStatistics=new FrmStatistics(Case.caselist);
+			this.dlgStatistics.setVisible(true);
+		}
+		else if(e.getSource()==this.menu_load_out)
+		{
+			
+		}
+		else if(e.getSource()==this.menu_neo4j)
+		{
+			
+		}
+		/*if(e.getSource()==this.menu_add)
 		{
 			dlgLoad=new FrmLoad(this,"加载",true);
 			dlgLoad.setVisible(true);
@@ -250,7 +255,7 @@ public class FrmMain extends JFrame implements ActionListener
 		else if(e.getSource()==this.menu_deleterelation)
 		{
 			
-		}
+		}*/
 		
 	}
 }
