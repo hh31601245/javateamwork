@@ -184,6 +184,7 @@ public class CaseRegular implements ICaseRegular{
 		{
 			word1=word.split("以上事实")[0];
 		}
+		word1=word1.replaceAll(" ","");
 		Pattern p=Pattern.compile("将[\\d\\u4e00-\\u9fa5、，.]+");
 		Matcher m=p.matcher(word1);
 		while(m.find())

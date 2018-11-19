@@ -26,6 +26,7 @@ import begin.Util;
 import util.BaseException;
 import model.Case;
 import model.Defendant;
+import csv.Lead_out;
 //import model.Relation;
 
 public class FrmMain extends JFrame implements ActionListener
@@ -204,7 +205,7 @@ public class FrmMain extends JFrame implements ActionListener
 		}
 		else if(e.getSource()==this.menuitem_load_out)
 		{
-			
+			Lead_out.write();
 		}
 		else if(e.getSource()==this.menuitem_neo4j)
 		{

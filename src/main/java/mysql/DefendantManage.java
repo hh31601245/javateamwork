@@ -350,5 +350,102 @@ public class DefendantManage implements IDefendantManage{
 		      }
 		return result;
 	}
+	public Map<String,Integer> StatisticsDefendantEducation(Case c)
+	{
+		Map<String,Integer> result=new HashMap<String,Integer>();
+		Connection conn=null;
+		try
+		{
+			conn=DBUtil.getConnection();
+			String sql="select Education,count(*) from defendant where cid=? group by Education";
+			java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+			//pst.setString(1,condidant);			
+			pst.setString(1,c.getCid());
+			//pst.setString(2,condidant);
+			java.sql.ResultSet rs=pst.executeQuery();
+			while(rs.next())
+			{
+				
+				String education=rs.getString(1);
+				Integer count=rs.getInt(2);
+				System.out.println(education+" "+count);
+				result.put(education,count);
+			}
+		}catch(SQLException e)
+		{
+			e.printStackTrace();
+			try {
+				throw new DbException(e);
+			} catch (DbException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}finally
+		{
+			if(conn!=null)
+			{
+				try
+				{
+					conn.close();
+				}catch(SQLException e)
+				{
+					e.printStackTrace();
+				}
+			}
+		}
+		for (String key : result.keySet()) {  //通过foreach方法来遍历
 
+		       System.out.println("key= "+ key + " and value= " + result.get(key));
+		      }
+		return result;
+	}
+	public Map<String,Integer> StatisticsDefendantPenaltyType(Case c)
+	{
+		Map<String,Integer> result=new HashMap<String,Integer>();
+		Connection conn=null;
+		try
+		{
+			conn=DBUtil.getConnection();
+			String sql="select PenaltyType,count(*) from defendant where cid=? group by PenaltyType";
+			java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+			//pst.setString(1,condidant);			
+			pst.setString(1,c.getCid());
+			//pst.setString(2,condidant);
+			java.sql.ResultSet rs=pst.executeQuery();
+			while(rs.next())
+			{
+				
+				String education=rs.getString(1);
+				Integer count=rs.getInt(2);
+				System.out.println(education+" "+count);
+				result.put(education,count);
+			}
+		}catch(SQLException e)
+		{
+			e.printStackTrace();
+			try {
+				throw new DbException(e);
+			} catch (DbException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}finally
+		{
+			if(conn!=null)
+			{
+				try
+				{
+					conn.close();
+				}catch(SQLException e)
+				{
+					e.printStackTrace();
+				}
+			}
+		}
+		for (String key : result.keySet()) {  //通过foreach方法来遍历
+
+		       System.out.println("key= "+ key + " and value= " + result.get(key));
+		      }
+		return result;
+	}
 }

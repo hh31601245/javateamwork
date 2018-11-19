@@ -15,6 +15,5 @@
        <artifactId>neo4j</artifactId>
        <version>3.3.5</version>
      </dependency>
-	
   </dependencies>
 </project>

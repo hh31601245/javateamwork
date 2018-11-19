@@ -8,6 +8,8 @@ import java.awt.Frame;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -57,6 +59,7 @@ public class FrmStatistics extends JDialog implements ActionListener {
 			 dpd.clear();
 			 for(Map.Entry<String, Integer> entry : map.entrySet())
 			 {
+				 System.out.println(entry.getKey()+" "+entry.getValue());
 				 dpd.setValue(entry.getKey(), entry.getValue());
 			 }
 			//chartFrame.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -106,7 +109,7 @@ public class FrmStatistics extends JDialog implements ActionListener {
 			comboBox.addItem("学历");
 			comboBox.addItem("年龄");
 			comboBox.addItem("刑罚种类");
-			comboBox.addItem("毒品种类");
+			//comboBox.addItem("毒品种类");
 			comboBox.setEditable(true); 
 			 
 		    comboBox.addActionListener(new ActionListener() { 
@@ -129,7 +132,7 @@ public class FrmStatistics extends JDialog implements ActionListener {
 	 		double width=Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 	 		double heigh=Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 	 		this.setLocation((int)(width-this.getWidth())/2,(int)(heigh-this.getHeight())/2);
-	 		this.validate();			
+	 		this.validate();
 		}
 
 		@Override
@@ -150,22 +153,115 @@ public class FrmStatistics extends JDialog implements ActionListener {
 				}else if(condition.equals("性别"))
 				{
 					resultmap.clear();
-					//int countboy=0;
-					//int countgirl=0;
+					Integer count=0;
 					for(int i=0;i<cases.size();i++)
 					{
+						Map<String,Integer> map=new HashMap<String,Integer>();
 						System.out.println(cases.get(i).getCid());
-						resultmap=begin.Util.defendantmanage.StatisticsDefendantSex(cases.get(i));
-						for (String key : resultmap.keySet()) {  //通过foreach方法来遍历
-
+						map=begin.Util.defendantmanage.StatisticsDefendantSex(cases.get(i));
+						//resultmap.putAll(map);
+						for (String key :map.keySet()) {  //通过foreach方法来遍历
+							   if(resultmap.containsKey(key))
+							   {
+								   count=resultmap.get(key)+map.get(key);
+								   resultmap.put(key,count);
+							   }
+							   else
+							   {
+								   resultmap.put(key,map.get(key));
+							   }
 						       System.out.println("key= "+ key + " and value= " + resultmap.get(key));
-						      }
+						 }
 					}
 					this.setVisible(false);
 					this.Reload(resultmap,"性别");
-				}else if(condition.equals(""))
+				}else if(condition.equals("学历"))
 				{
-					
+					resultmap.clear();
+					Integer count=0;
+					for(int i=0;i<cases.size();i++)
+					{
+						Map<String,Integer> map=new HashMap<String,Integer>();
+						map=begin.Util.defendantmanage.StatisticsDefendantEducation(cases.get(i));
+						for (String key :map.keySet()) {  //通过foreach方法来遍历
+							   if(resultmap.containsKey(key))
+							   {
+								   count=resultmap.get(key)+map.get(key);
+								   resultmap.put(key,count);
+							   }
+							   else
+							   {
+								   resultmap.put(key,map.get(key));
+							   }
+						       System.out.println("key= "+ key + " and value= " + resultmap.get(key));
+						 }
+					}
+					this.setVisible(false);
+					this.Reload(resultmap,"学历");
+				}else if(condition.equals("年龄"))
+				{
+					resultmap.clear();
+					String[] age={"<18","18~30岁","30~40岁","40~50岁",">=50岁"};
+					Integer[] count= {0,0,0,0,0};
+					for(int i=0;i<cases.size();i++)
+					{
+						try {
+							List<Defendant> defendantlist=begin.Util.defendantmanage.loadDefendant(cases.get(i));
+							for(Defendant d:defendantlist)
+							{
+								if(d.getAge()>=50)
+								{
+									count[4]++;
+								}else if(d.getAge()>=40)
+								{
+									count[3]++;
+								}else if(d.getAge()>=30)
+								{
+									count[2]++;
+								}else if(d.getAge()>=18)
+								{
+									count[1]++;
+								}else
+								{
+									count[0]++;
+								}
+							}
+							for(int j=0;j<5;j++)
+							{
+								resultmap.put(age[j],count[j]);
+							}
+							
+							
+						} catch (BaseException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+					this.setVisible(false);
+					this.Reload(resultmap,"年龄");
+				}else if(condition.equals("刑罚种类"))
+				{
+					resultmap.clear();
+					Integer count=0;
+					for(int i=0;i<cases.size();i++)
+					{
+						Map<String,Integer> map=new HashMap<String,Integer>();
+						map=begin.Util.defendantmanage.StatisticsDefendantPenaltyType(cases.get(i));
+						for (String key :map.keySet()) {  //通过foreach方法来遍历
+							   if(resultmap.containsKey(key))
+							   {
+								   count=resultmap.get(key)+map.get(key);
+								   resultmap.put(key,count);
+							   }
+							   else
+							   {
+								   resultmap.put(key,map.get(key));
+							   }
+						       System.out.println("key= "+ key + " and value= " + resultmap.get(key));
+						 }
+					}
+					this.setVisible(false);
+					this.Reload(resultmap,"刑罚种类");
 				}
 			}
 		}

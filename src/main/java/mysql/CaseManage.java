@@ -250,7 +250,7 @@ public class CaseManage implements ICaseManage{
 		
 
 	}
-	public Map<String,Integer> StatisticsCase(Case c,String condidant)
+	/*public Map<String,Integer> StatisticsCase(Case c)
 	{
 		Map<String,Integer> result=null;
 		Connection conn=null;
@@ -258,10 +258,8 @@ public class CaseManage implements ICaseManage{
 		{
 			conn=DBUtil.getConnection();
 			String sql="select ?,count(*) from Defendant where cid=? group by ?";
-			java.sql.PreparedStatement pst=conn.prepareStatement(sql);
-			pst.setString(1,condidant);			
-			pst.setString(2,c.getCid());
-			pst.setString(3,condidant);
+			java.sql.PreparedStatement pst=conn.prepareStatement(sql);		
+			pst.setString(1,c.getCid());
 			java.sql.ResultSet rs=pst.executeQuery();
 			if(rs.next())
 			{
@@ -290,5 +288,5 @@ public class CaseManage implements ICaseManage{
 			}
 		}
 		return result;
-	}
+	}*/
 }
