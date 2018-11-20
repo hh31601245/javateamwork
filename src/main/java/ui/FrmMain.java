@@ -209,7 +209,7 @@ public class FrmMain extends JFrame implements ActionListener
 		}
 		else if(e.getSource()==this.menuitem_neo4j)
 		{
-			
+			neo4j.createNeo4j.create();
 		}
 		/*if(e.getSource()==this.menu_add)
 		{
