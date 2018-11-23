@@ -109,7 +109,7 @@ public class DefendantRegular implements IDefendantRegular{
 	}
 
 	@Override
-	public String getCrime(String defendantword) {
+	public String getCrime(String defendantword) {  //有问题
 		// TODO Auto-generated method stub
 		String result=null;
 		
@@ -134,7 +134,7 @@ public class DefendantRegular implements IDefendantRegular{
 	}
 
 	@Override
-	public String getPenaltyType(String defendantword) {
+	public String getPenaltyType(String defendantword) {  //有问题
 		// TODO Auto-generated method stub
 		String result=null;
 		defendantword=defendantword.split("被告人")[2];
@@ -165,7 +165,7 @@ public class DefendantRegular implements IDefendantRegular{
 	}
 
 	@Override
-	public String getSentence(String defendantword) {
+	public String getSentence(String defendantword) {  //有问题
 		// TODO Auto-generated method stub
 		String result=null;
 		defendantword=defendantword.split("被告人")[2];
@@ -196,7 +196,7 @@ public class DefendantRegular implements IDefendantRegular{
 	}
 
 	@Override
-	public String getPropertyPenaltyType(String defendantword) {
+	public String getPropertyPenaltyType(String defendantword) {  //有问题
 		// TODO Auto-generated method stub
 		String result=null;
 		defendantword=defendantword.split("被告人")[2];
@@ -227,7 +227,7 @@ public class DefendantRegular implements IDefendantRegular{
 	}
 
 	@Override
-	public double getPropertyPenaltyAmount(String defendantword) {
+	public double getPropertyPenaltyAmount(String defendantword) {  //有问题
 		// TODO Auto-generated method stub
 		double result=0;
 		defendantword=defendantword.split("被告人")[2];

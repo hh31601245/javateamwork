@@ -10,7 +10,7 @@ public interface ICaseRegular {
 	 * 通过正则获得判决年份
 	 * @return
 	 */
-	public String getCyear(String word);
+	public String getCyear(String word,String url);
 	/**
 	 * 通过正则获得CourtName
 	 * @return

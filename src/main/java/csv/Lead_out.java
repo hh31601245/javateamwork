@@ -45,7 +45,7 @@ public class Lead_out {
             	for(Defendant defendant:defendantlist)
             	{
             		String[] content1= {defendant.getDid(),defendant.getDname(),defendant.getSex()
-            				,String.valueOf(defendant.getAge()),defendant.getDateOfBrith()
+            				,String.valueOf(defendant.getAge()),defendant.getDateOfBrith(),defendant.getEducation()
             				,defendant.getCrime(),defendant.getPenaltyType(),defendant.getSentence()
             				,defendant.getPropertyPenaltyType(),String.valueOf(defendant.getPropertyPenaltyAmount())
             				,defendant.getCid()};

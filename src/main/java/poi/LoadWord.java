@@ -38,6 +38,7 @@ public class LoadWord {
 			
 		}catch(Exception e1)
 		{
+			//System.out.println(title);
 			//OPCPackage opcPackage = POIXMLDocument.openPackage(URL.WordURL); 
 			OPCPackage opcPackage = POIXMLDocument.openPackage(title); 
             POIXMLTextExtractor extractor=null;
@@ -49,7 +50,8 @@ public class LoadWord {
 			} catch (OpenXML4JException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}  
+			}
+			
             String text2007 = extractor.getText();  
             //System.out.println(text2007);
             result=text2007;

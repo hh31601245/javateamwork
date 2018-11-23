@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -134,11 +135,48 @@ public class FrmLoad extends JDialog implements ActionListener{
 		if(e.getSource()==this.btnLoad)
 		{
 		    JFileChooser jf=new JFileChooser();
-		    jf.showOpenDialog(this);
+		    jf.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES );
+		    jf.setMultiSelectionEnabled(true);
+		    jf.showOpenDialog(this); 
 		    File f=jf.getSelectedFile();
 		    String jurl=f.getAbsolutePath();
 		    String jtitle=null;
 		    String content=null;
+		    System.out.println(jurl);
+		    	 File file = new File(jurl);
+		    if (file.isDirectory()) {
+				         System.out.println("文件夹");
+				         String[] filelist = file.list();
+				         for (int i = 0; i < filelist.length; i++) {
+				        	 Judgment j=new Judgment();
+				        	 String jurl1=jurl+"\\"+filelist[i];
+				        	 //System.out.println(filelist[i]);
+				        	 try {
+				 				content=LoadWord.LoadAllWord(jurl1);
+				 			} catch (IOException e1) {
+				 				// TODO Auto-generated catch block
+				 				e1.printStackTrace();
+				 			}
+				        	 Pattern p=Pattern.compile("浙\\d+刑初\\d+号"); //括号里写正则表达式
+							 Matcher m= p.matcher(jurl1);  //括号里是目标字符串
+							 while(m.find())
+								{
+									//System.out.println(m.group());
+									jtitle=m.group();
+									break;
+								}
+							System.out.println(jtitle);
+							j.setTitle(jtitle);
+						    j.setContent(content);
+						  //  Util.judgmentmanage.addJudgment(j);
+						  //  Leading_in.Leading_in_Case(jurl,jtitle);
+						   // Leading_in.Leading_in_Defendant(jurl,jtitle);
+
+				         }
+
+			}
+		    else
+		    {
 		    Judgment j=new Judgment();
 		    try {
 				content=LoadWord.LoadAllWord(jurl);
@@ -160,7 +198,8 @@ public class FrmLoad extends JDialog implements ActionListener{
 		    j.setContent(content);
 		    Util.judgmentmanage.addJudgment(j);
 		    Leading_in.Leading_in_Case(jurl,jtitle);
-		    Leading_in.Leading_in_Defendant(jurl,jtitle);
+		    Leading_in.Leading_in_Defendant(jurl,jtitle);		    
+		    }
 		    this.Reload();
 		}else if(e.getSource()==this.btnOk)
 		{

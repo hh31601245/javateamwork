@@ -448,4 +448,39 @@ public class DefendantManage implements IDefendantManage{
 		      }
 		return result;
 	}
+	public List<Defendant> vagueSearch(String name,String Cid)throws BaseException{
+		  Connection conn = null;
+		  List<Defendant> result = new ArrayList<>();
+		  try {
+			  conn = DBUtil.getConnection();
+			  String sql = "select * from defendant where Dname like ? and Cid=?";  // %写到？里面
+			  java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+			  pst.setString(1, "%"+name+"%");  //模糊查询注意点
+			  pst.setString(2,Cid);
+			  ResultSet rs = pst.executeQuery();
+			  while(rs.next()) {
+				    Defendant d = new Defendant();  //输出多个Defendant
+				    d.setDid(rs.getString(1));
+					d.setDname(rs.getString(2));
+					d.setSex(rs.getString(3));
+					d.setAge(rs.getInt(4));
+					d.setDateOfBrith(rs.getString(5));
+					d.setEducation(rs.getString(6));
+					d.setCrime(rs.getString(7));
+					d.setPenaltyType(rs.getString(8));
+					d.setSentence(rs.getString(9));
+					d.setPropertyPenaltyType(rs.getString(10));
+					d.setPropertyPenaltyAmount(rs.getDouble(11));
+					d.setCid(rs.getString(12));
+					result.add(d);
+			  }
+		  }catch(SQLException e) {
+			  e.printStackTrace();
+		  }
+		  for(Defendant defendant:result) {
+			  System.out.println("Did is: "+defendant.getDid()+" "+"Dname is: "+defendant.getDname()+" "+"Sex is: "+defendant.getSex()+" "+"Age is: "+defendant.getAge()+" "+"DateOfBrith is: "+defendant.getDateOfBrith()+" "+"Education is: "+defendant.getEducation()+" "+"Crime is: "+defendant.getCrime()+" "+"PenaltyType is: "+defendant.getPenaltyType()+" "+"Sentence is: "+defendant.getSentence()+" "+"PropertyPenaltyType is: "+defendant.getPropertyPenaltyType()+" "+"PropertyPenaltyAmount is: "+defendant.getPropertyPenaltyAmount()+" "+"Cid is: "+defendant.getCid());
+		  }
+		return result;
+	}
+
 }

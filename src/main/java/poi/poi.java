@@ -44,7 +44,7 @@ public class poi {
 		String result=null;
 		try
 		{
-			InputStream is = new FileInputStream(new File("D:\\java高级\\舟山\\（2016）浙0902刑初00262号.doc"));
+			InputStream is = new FileInputStream(new File("D:\\java高级\\舟山\\（2017）浙0922刑初50号.docx"));
 			WordExtractor ex = new WordExtractor(is);  
             String text2003 = ex.getText();  
             //System.out.println(text2003);
@@ -52,7 +52,7 @@ public class poi {
 			
 		}catch(Exception ex)
 		{
-			OPCPackage opcPackage = POIXMLDocument.openPackage("D:\\java高级\\舟山\\（2016）浙0902刑初00262号.doc");  
+			OPCPackage opcPackage = POIXMLDocument.openPackage("D:\\java高级\\舟山\\（2017）浙0922刑初50号.docx");  
             POIXMLTextExtractor extractor=null;
 			try {
 				extractor = new XWPFWordExtractor(opcPackage);
@@ -75,6 +75,14 @@ public class poi {
 	{
 		try {
 			String word=poi.readAndWriterTest3();
+			System.out.println(word);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		/*try {
+			String word=poi.readAndWriterTest3();
 			String[] wordlist=word.split("舟山市定海区人民检察院")[1].split("\n");
 			String[] wordlist2=word.split("判决如下")[1].split("\n",-1);
 			System.out.println(wordlist2.length);
@@ -89,6 +97,6 @@ public class poi {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 	}
 }

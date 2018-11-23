@@ -18,18 +18,31 @@ public class CaseRegular implements ICaseRegular{
 		return result;
 	}
 	@Override
-	public String getCyear(String word) {
+	public String getCyear(String word,String url) {
 		// TODO Auto-generated method stub
 		String result=null;
+		word=word.replaceAll(" ","");
 		Pattern p=Pattern.compile("（[\\d]+）浙\\d+刑初\\d+号"); //括号里写正则表达式
-		Matcher m= p.matcher(word);  //括号里是目标字符串
+		Matcher m= p.matcher(url);  //括号里是目标字符串
 		while(m.find())
 		{
 			//System.out.println(m.group());
-			result=m.group().split("浙")[0];
+			result=m.group().split("（")[1].split("）浙")[0];
 			break;
 		}
-		
+		result=result+"年";
+		word=word.split("如不服本判决")[1].split("书记员")[0];
+		p=Pattern.compile("[一二三四五六七八九十]+月[一二三四五六七八九十]+日");
+		m=p.matcher(word);
+		while(m.find())
+		{
+			String strmouth=m.group().split("月")[0];
+			int  mounth=(int)this.chineseNumber2Double(strmouth);
+			String strday=m.group().split("月")[1].split("日")[0];
+			int day=(int)this.chineseNumber2Double(strday);
+			result=result+String.valueOf(mounth)+"月"+String.valueOf(day)+"日";
+			break;
+		}
 		return result;
 	}
 	@Override
@@ -185,7 +198,13 @@ public class CaseRegular implements ICaseRegular{
 			word1=word.split("以上事实")[0];
 		}
 		word1=word1.replaceAll(" ","");
-		Pattern p=Pattern.compile("将[\\d\\u4e00-\\u9fa5、，.]+");
+		Pattern p=Pattern.compile("[,，;；。）}\\b以]([^,，;；。）}\\b\\d]*)([\\d\\s.]+|[一二三四五六七八九十]+)(元|人民币)([^\\d.一二三四五六七八九十]*)([\\d\\s.]+|[一二三四五六七八九十]+)(微克|毫克|克|粒|小包|包|公斤|千克|斤|吨|袋|小袋)([^,，;；()（）{}]+)(甲基苯丙胺|冰毒|大麻|可卡因|海洛因|吗啡|卡西酮|鸦片|K粉|摇头丸|杜冷丁|古柯|咖啡因|三唑仑|羟基丁酸)");
+		Matcher m=p.matcher(word1);
+		while(m.find())
+		{
+			result=m.group();
+		}
+		/*Pattern p=Pattern.compile("将[\\d\\u4e00-\\u9fa5、，.]+");
 		Matcher m=p.matcher(word1);
 		while(m.find())
 		{
@@ -218,7 +237,7 @@ public class CaseRegular implements ICaseRegular{
 //			//System.out.println(m.group());
 //			result=m.group().split("犯")[1];
 //			break;
-//		}
+//		}*/
 		return result;
 	}
     public String unitConvert(String content,String word)
@@ -311,7 +330,39 @@ public class CaseRegular implements ICaseRegular{
 	}
      public static void main(String[] args)
      {
+    	 String[] title= {"D:\\java高级\\舟山\\（2016）浙0902刑初00262号.doc"
+    			 ,"D:\\java高级\\舟山\\（2016）浙0903刑初00252号.doc",
+    			 "D:\\java高级\\舟山\\（2017）浙0902刑初110号.doc",
+    			 "D:\\java高级\\舟山\\（2017）浙0902刑初218号.doc",
+    			 "D:\\java高级\\舟山\\（2017）浙0902刑初239号.doc",
+    			 "D:\\java高级\\舟山\\（2017）浙0902刑初244号.doc",
+    			 "D:\\java高级\\舟山\\（2017）浙0902刑初250号.doc",
+    			 "D:\\java高级\\舟山\\（2017）浙0902刑初382号.doc",
+    			 "D:\\java高级\\舟山\\（2017）浙0903刑初21号.doc",
+    			 "D:\\java高级\\舟山\\（2017）浙0903刑初29号.doc",
+    			 "D:\\java高级\\舟山\\（2017）浙0903刑初31号.doc",
+    			 "D:\\java高级\\舟山\\（2017）浙0903刑初281号.doc",
+    			 "D:\\java高级\\舟山\\（2017）浙0903刑初323号.doc",
+    			 "D:\\java高级\\舟山\\（2017）浙0903刑初366号.doc",
+    			 "D:\\java高级\\舟山\\（2017）浙0921刑初53号.doc",
+    			 "D:\\java高级\\舟山\\（2017）浙0921刑初91号.doc",
+    			 "D:\\java高级\\舟山\\（2017）浙0921刑初114号.doc",
+    			 "D:\\java高级\\舟山\\（2017）浙0922刑初13号.docx",
+    			 "D:\\java高级\\舟山\\（2017）浙0922刑初32号.docx",
+    			 "D:\\java高级\\舟山\\（2017）浙0922刑初47号.docx",
+    			 "D:\\java高级\\舟山\\（2017）浙0922刑初50号.docx"
+    			 };
+    	 String[] word=new String[title.length];
+    	 try {
+    		 for(int i=0;i<title.length;i++)
+			     word[i]=poi.LoadWord.LoadAllWord(title[i]);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	 CaseRegular c=new CaseRegular();
+    	 for(int i=0;i<title.length;i++)
+    	 System.out.println(title[i]+" "+c.getCyear(word[i],title[i]));
      }
      
 }

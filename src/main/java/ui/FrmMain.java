@@ -9,6 +9,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -40,10 +42,16 @@ public class FrmMain extends JFrame implements ActionListener
 	private JMenuItem menuitem_statistics=new JMenuItem("统计");
 	private JMenu menu_load_out=new JMenu("导出");
 	private JMenuItem menuitem_load_out=new JMenuItem("导出");
+	private JMenu menu_search=new JMenu("查询");
+	private JMenuItem menuitem_search=new JMenuItem("名字查询");
+	private JMenu menu_trend=new JMenu("趋势分析");
+	private JMenuItem menuitem_trend=new JMenuItem("年龄发展趋势分析");
 	private JMenu menu_neo4j=new JMenu("生成Neo4j");
 	private JMenuItem menuitem_neo4j=new JMenuItem("生成Neo4j");
 	private FrmLoad dlgLoad=null;
 	private FrmStatistics dlgStatistics=null;
+	private FrmSearch dlgSearch=null;
+	private FrmTrend dlgTrend=null;
 	private JPanel statusBar=new JPanel();
 	
 	private Object tblCaseTitle[]=Case.TABLE_TITLE;
@@ -153,12 +161,18 @@ public class FrmMain extends JFrame implements ActionListener
 		//menubar.add(menu_showdefendant);
 		this.menu_statistics.add(menuitem_statistics);
 		this.menu_load_out.add(menuitem_load_out);
+		this.menu_search.add(menuitem_search);
+		this.menu_trend.add(menuitem_trend);
 		this.menu_neo4j.add(menuitem_neo4j);
 		menubar.add(menu_statistics);
 		menubar.add(menu_load_out);
+		menubar.add(menu_search);
+		menubar.add(menu_trend);
 		menubar.add(menu_neo4j);
 		this.menuitem_statistics.addActionListener(this);
 		this.menuitem_load_out.addActionListener(this);
+		this.menuitem_search.addActionListener(this);
+		this.menuitem_trend.addActionListener(this);
 		this.menuitem_neo4j.addActionListener(this);
 		this.setJMenuBar(menubar);
 		this.getContentPane().add(new JScrollPane(this.dataTableCase),BorderLayout.NORTH);
@@ -206,10 +220,22 @@ public class FrmMain extends JFrame implements ActionListener
 		else if(e.getSource()==this.menuitem_load_out)
 		{
 			Lead_out.write();
+			JOptionPane.showMessageDialog(null, "导出成功", "标题",JOptionPane.WARNING_MESSAGE); 
+		}
+		else if(e.getSource()==this.menuitem_search)
+		{
+			this.dlgSearch=new FrmSearch(this,"查询",true);
+			this.dlgSearch.setVisible(true);
+		}
+		else if(e.getSource()==this.menuitem_trend)
+		{
+			this.dlgTrend=new FrmTrend(this,"趋势",true);
+			this.dlgTrend.setVisible(true);
 		}
 		else if(e.getSource()==this.menuitem_neo4j)
 		{
-			neo4j.createNeo4j.create();
+			neo4j.createNeo4j.create();			
+			JOptionPane.showMessageDialog(null, "生成成功，在cmd中输入neo4j console，然后登录http://127.0.0.1:7474查看", "标题",JOptionPane.WARNING_MESSAGE); 
 		}
 		/*if(e.getSource()==this.menu_add)
 		{
