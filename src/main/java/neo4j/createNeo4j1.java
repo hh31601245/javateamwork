@@ -66,8 +66,8 @@ public class createNeo4j1 {
             						String.valueOf(c.getMinAge()),"FirstDefendant",c.getFirstDefendant(),
             						"DrugTypeAndNumberOrUnit",c.getDrugTypeAndNumberOrUnit(),
             						"DrugPrice",c.getDrugPrice()));*/
-            		tx.run("create(Case:Case{Cid:{Cid}})",
-            				parameters("Cid",c.getCid()));
+            		tx.run("create(Case:Case{name:{name}})",
+            				parameters("name",c.getCid()));
             		tx.success();
             		
             		List<Defendant> defendantlist=new ArrayList<Defendant>();
@@ -89,10 +89,10 @@ public class createNeo4j1 {
             							"PropertyPenaltyType",d.getPropertyPenaltyType(),"PropertyPenaltyAmount",String.valueOf(d.getPropertyPenaltyAmount()),
             							"Cid",d.getCid()));
             			tx.success();*/
-            			tx.run("create(Defendant:"+d.getDname()+"{Dname:{Dname},Cid:{Cid}})",
-            					parameters("Dname",d.getDname(),"Cid",d.getCid()));
+            			tx.run("create(Defendant:Defendant{name:{name},Cid:{Cid}})",
+            					parameters("name",d.getDname(),"Cid",d.getCid()));
             			tx.success();
-            			 tx.run("match("+d.getDname()+":Defendant),(b:Case) where a.Cid=b.Cid create(a)-[r:is_this_case_defendant]->(b)");
+            			 tx.run("match(a:Defendant),(b:Case) where a.Cid=b.name create(a)-[r:is_this_case_defendant]->(b)");
             			 tx.success();
             		}
             	}

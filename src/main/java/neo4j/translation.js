@@ -1,7 +1,0 @@
-/**
- * 
- */
-
-function translation {
-	var 
-}
