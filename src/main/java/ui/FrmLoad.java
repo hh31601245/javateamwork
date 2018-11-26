@@ -41,7 +41,7 @@ public class FrmLoad extends JDialog implements ActionListener{
 	private JButton btnLoad=new JButton("载入");
 	private JButton btnCancel=new JButton("取消");
 	private JButton btnOk=new JButton("确定");
-//	private JButton btnAllSelect=new JButton("全选");
+	private JButton btnAllSelect=new JButton("全选");
 	private JButton btnDelete=new JButton("删除");
 	private JList<String> list=new JList<String>();
 	int i=0;
@@ -76,6 +76,9 @@ public class FrmLoad extends JDialog implements ActionListener{
 		toolBar.add(this.btnLoad);
 		JPanel kongge=new JPanel();
 		kongge.setPreferredSize(new Dimension(100,0));
+		toolBar.add(this.btnAllSelect);
+		JPanel kongge0=new JPanel();
+		kongge0.setPreferredSize(new Dimension(100,0));
 		toolBar.add(kongge);
 		toolBar.add(this.btnDelete);
 		JPanel kongge1=new JPanel();
@@ -116,6 +119,7 @@ public class FrmLoad extends JDialog implements ActionListener{
 		this.setLocation((int)(width-this.getWidth())/2,(int)(heigh-this.getHeight())/2);
 		this.validate();
 		btnLoad.addActionListener(this);
+		btnAllSelect.addActionListener(this);
 		btnDelete.addActionListener(this);
 		btnOk.addActionListener(this);
 		btnCancel.addActionListener(this);

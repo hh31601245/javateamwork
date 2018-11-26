@@ -262,7 +262,7 @@ class ToJson {
 
         try {
 
-            FileOutputStream fileOutputStream = new FileOutputStream("F:\\ideadata\\132\\data.json");
+            FileOutputStream fileOutputStream = new FileOutputStream("132\\data.json");
 
             fileOutputStream.write(json.getBytes());
 
