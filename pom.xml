@@ -15,5 +15,10 @@
        <artifactId>neo4j</artifactId>
        <version>3.3.5</version>
      </dependency>
+     <dependency>
+        <groupId>org.neo4j.driver</groupId>
+        <artifactId>neo4j-java-driver</artifactId>
+        <version>1.1.2</version>
+    </dependency>
   </dependencies>
 </project>

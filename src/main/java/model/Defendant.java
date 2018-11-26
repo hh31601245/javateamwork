@@ -1,5 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 
  * @author Administrator
@@ -159,5 +162,4 @@ public class Defendant {
 	public void setPropertyPenaltyAmount(double propertyPenaltyAmount) {
 		PropertyPenaltyAmount = propertyPenaltyAmount;
 	}
-	
 }

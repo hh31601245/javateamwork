@@ -234,7 +234,9 @@ public class FrmMain extends JFrame implements ActionListener
 		}
 		else if(e.getSource()==this.menuitem_neo4j)
 		{
-			neo4j.createNeo4j.create();			
+			neo4j.createNeo4j1.Delete();
+			neo4j.createNeo4j1.Create();
+			neo4j.useNeo4j.Save();
 			JOptionPane.showMessageDialog(null, "生成成功，在cmd中输入neo4j console，然后登录http://127.0.0.1:7474查看", "标题",JOptionPane.WARNING_MESSAGE); 
 		}
 		/*if(e.getSource()==this.menu_add)
