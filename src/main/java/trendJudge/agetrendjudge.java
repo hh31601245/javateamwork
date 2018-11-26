@@ -105,7 +105,9 @@ public class agetrendjudge {
 			}
 			else
 			{
+				//count=count+(Integer.valueOf(a.get(key))-baseage);
 				count=count+(Integer.valueOf(a.get(key))-baseage);
+				baseage=Integer.valueOf(a.get(key));
 			}
 		}
 		if(count>0)

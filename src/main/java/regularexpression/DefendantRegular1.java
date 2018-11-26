@@ -15,7 +15,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import begin.Util;
-public class DefendantRegular implements IDefendantRegular{
+public class DefendantRegular1 implements IDefendantRegular{
     
 	public String getCid(String title)
 	{
@@ -99,7 +99,7 @@ public class DefendantRegular implements IDefendantRegular{
 	public String getEducation(String defendantword) {
 		// TODO Auto-generated method stub
 		String result=null;
-		Pattern p=Pattern.compile("(小学文化)|(高中文化)|(大学本科)|(专科)|(硕士)|(研究生)|(博士)|(初中文化)");
+		Pattern p=Pattern.compile("(小学文化)|(中学文化)|(高中文化)|(大学本科)|(专科)|(硕士)|(研究生)|(博士)");
 		Matcher m=p.matcher(defendantword);
 		while(m.find())
 		{
@@ -109,16 +109,13 @@ public class DefendantRegular implements IDefendantRegular{
 	}
 
 	@Override
-	public String getCrime(String defendantword) {
+	public String getCrime(String defendantword) {  //有问题
 		// TODO Auto-generated method stub
 		String result=null;
-		System.out.println(defendantword);
-		//defendantword = defendantword.split("被告人")[2];
-		//Pattern p = Pattern.compile("犯[\\u4e00-\\u9fa5]+罪");
 		
-		//defendantword=defendantword.split("[一二三四五六七八九]、被告人")[1];
+		defendantword=defendantword.split("被告人")[2];
 		//System.out.println(defendantword);
-		Pattern p=Pattern.compile("([一二三四五六七八九]、被告人[\\u4e00-\\u9fa5]+犯[\\u4e00-\\u9fa5]+罪)|(；犯[\\u4e00-\\u9fa5]+罪)|(被告人[\\u4e00-\\u9fa5]+犯[\\u4e00-\\u9fa5]+罪)");
+		Pattern p=Pattern.compile("犯[\\u4e00-\\u9fa5]+罪");
 		Matcher m=p.matcher(defendantword);
 		while(m.find())
 		{
@@ -137,10 +134,10 @@ public class DefendantRegular implements IDefendantRegular{
 	}
 
 	@Override
-	public String getPenaltyType(String defendantword) {
+	public String getPenaltyType(String defendantword) {  //有问题
 		// TODO Auto-generated method stub
 		String result=null;
-		//defendantword=defendantword.split("被告人")[2];
+		defendantword=defendantword.split("被告人")[2];
 		//System.out.println(word);
 		if(defendantword.contains("数罪并罚"))
 		{
@@ -155,7 +152,7 @@ public class DefendantRegular implements IDefendantRegular{
 		}
 		else
 		{
-			Pattern p=Pattern.compile("，判处[\\u4e00-\\u9fa5]+");
+			Pattern p=Pattern.compile("判处[\\u4e00-\\u9fa5]+刑");
 			Matcher m=p.matcher(defendantword);
 			while(m.find())
 			{
@@ -168,10 +165,10 @@ public class DefendantRegular implements IDefendantRegular{
 	}
 
 	@Override
-	public String getSentence(String defendantword) {
+	public String getSentence(String defendantword) {  //有问题
 		// TODO Auto-generated method stub
 		String result=null;
-		//defendantword=defendantword.split("被告人")[2];
+		defendantword=defendantword.split("被告人")[2];
 		//System.out.println(word);
 		if(defendantword.contains("数罪并罚"))
 		{
@@ -186,12 +183,12 @@ public class DefendantRegular implements IDefendantRegular{
 		}
 		else
 		{
-			Pattern p=Pattern.compile("，判处[\\u4e00-\\u9fa5]+");
+			Pattern p=Pattern.compile("判处[\\u4e00-\\u9fa5]+");
 			Matcher m=p.matcher(defendantword);
 			while(m.find())
 			{
 				//System.out.println(m.group());
-				result=m.group().split("(刑)|(拘役)")[1];
+				result=m.group().split("刑")[1];
 				break;
 			}
 		}
@@ -199,10 +196,10 @@ public class DefendantRegular implements IDefendantRegular{
 	}
 
 	@Override
-	public String getPropertyPenaltyType(String defendantword) {
+	public String getPropertyPenaltyType(String defendantword) {  //有问题
 		// TODO Auto-generated method stub
 		String result=null;
-		//defendantword=defendantword.split("被告人")[2];
+		defendantword=defendantword.split("被告人")[2];
 		if(defendantword.contains("数罪并罚"))
 		{
 			String word1=defendantword.split("数罪并罚")[1];
@@ -217,7 +214,7 @@ public class DefendantRegular implements IDefendantRegular{
 		}
 		else
 		{
-			Pattern p=Pattern.compile("，并处[\\u4e00-\\u9fa5]+人民币");
+			Pattern p=Pattern.compile("并处[\\u4e00-\\u9fa5]+人民币");
 			Matcher m=p.matcher(defendantword);
 			while(m.find())
 			{
@@ -230,10 +227,10 @@ public class DefendantRegular implements IDefendantRegular{
 	}
 
 	@Override
-	public double getPropertyPenaltyAmount(String defendantword) {
+	public double getPropertyPenaltyAmount(String defendantword) {  //有问题
 		// TODO Auto-generated method stub
 		double result=0;
-		//defendantword=defendantword.split("被告人")[2];
+		defendantword=defendantword.split("被告人")[2];
 		if(defendantword.contains("数罪并罚"))
 		{
 			String word1=defendantword.split("数罪并罚")[1];
@@ -248,7 +245,7 @@ public class DefendantRegular implements IDefendantRegular{
 		}
 		else
 		{
-			Pattern p=Pattern.compile("，并处[\\u4e00-\\u9fa5]+人民币[\\d\\u4e00-\\u9fa5]+");
+			Pattern p=Pattern.compile("并处[\\u4e00-\\u9fa5]+人民币[\\d\\u4e00-\\u9fa5]+");
 			Matcher m=p.matcher(defendantword);
 			while(m.find())
 			{
@@ -315,40 +312,15 @@ public class DefendantRegular implements IDefendantRegular{
 	    }
 	public static void main(String[] args)
 	{
-		String[] title= {"E:\\java高级\\舟山\\（2016）浙0902刑初00262号.doc"
-   			 ,"E:\\java高级\\舟山\\（2016）浙0903刑初00252号.doc",
-   			 "E:\\java高级\\舟山\\（2017）浙0902刑初110号.doc",
-   			 "E:\\java高级\\舟山\\（2017）浙0902刑初218号.doc",
-   			 "E:\\java高级\\舟山\\（2017）浙0902刑初239号.doc",
-   			 "E:\\java高级\\舟山\\（2017）浙0902刑初244号.doc",
-   			 "E:\\java高级\\舟山\\（2017）浙0902刑初250号.doc",
-   			 "E:\\java高级\\舟山\\（2017）浙0902刑初382号.doc",
-   			 "E:\\java高级\\舟山\\（2017）浙0903刑初21号.doc",
-   			 "E:\\java高级\\舟山\\（2017）浙0903刑初29号.doc",
-   			 "E:\\java高级\\舟山\\（2017）浙0903刑初31号.doc",
-   			 "E:\\java高级\\舟山\\（2017）浙0903刑初281号.doc",
-   			 "E:\\java高级\\舟山\\（2017）浙0903刑初323号.doc",
-   			 "E:\\java高级\\舟山\\（2017）浙0903刑初366号.doc",
-   			 "E:\\java高级\\舟山\\（2017）浙0921刑初53号.doc",
-   			 "E:\\java高级\\舟山\\（2017）浙0921刑初91号.doc",
-   			 "E:\\java高级\\舟山\\（2017）浙0921刑初114号.doc",
-   			 "E:\\java高级\\舟山\\（2017）浙0922刑初13号.docx",
-   			 "E:\\java高级\\舟山\\（2017）浙0922刑初32号.docx",
-   			 "E:\\java高级\\舟山\\（2017）浙0922刑初47号.docx",
-   			 "E:\\java高级\\舟山\\（2017）浙0922刑初50号.docx"
-   			 };
-		List<String> defendantwords=new ArrayList<String>();
+	/*	List<String> defendantwords=new ArrayList<String>();
 		CaseRegular caseregular=new CaseRegular();
-		for(int i=0;i<title.length;i++)
-		{
-		 defendantwords=LoadWord.LoadDefendantWord(title[i]);
+		defendantwords=LoadWord.LoadDefendantWord();
 		for(String defendantword:defendantwords)
 		{
 			DefendantRegular defendantregular=new DefendantRegular();
-			System.out.println(defendantregular.getPropertyPenaltyType(defendantword));
-			System.out.println(i+"------------------");
-		}
-		}
+			System.out.println(defendantregular.getPropertyPenaltyAmount(defendantword));
+			System.out.println("------------------");
+		}*/
 	}
 
 }

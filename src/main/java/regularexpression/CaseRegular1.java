@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 import begin.Util;
 import itf.ICaseRegular;
 import poi.LoadWord;
-public class CaseRegular implements ICaseRegular{
+public class CaseRegular1 implements ICaseRegular{
 
 	@Override
 	public String getCid(String title) {
@@ -123,7 +123,6 @@ public class CaseRegular implements ICaseRegular{
 		while(m.find())
 		{
 			//System.out.println(m.group());
-			//System.out.println(m.group());
 			result=m.group().split("被告人")[1];
 			break;
 		}
@@ -199,15 +198,11 @@ public class CaseRegular implements ICaseRegular{
 			word1=word.split("以上事实")[0];
 		}
 		word1=word1.replaceAll(" ","");
-		//System.out.println(word1);
-		Pattern p=Pattern.compile("([\\d.]+克[的]*甲基苯丙胺)|([\\d.]+[半]*只海洛因)|([\\d.]+包甲基苯丙胺)|([\\d.]+元甲基苯丙胺)|(甲基苯丙胺[\\d.]+克)|([\\d一二三四五六七八九十]小袋甲基苯丙胺)|([\\d一二三四五六七八九十]份甲基苯丙胺)|([1,9]粒甲基苯丙胺[片剂]*)|(甲基苯丙胺[（冰毒）]*[\\d.]克)|(甲基苯丙胺，毒品重约[\\d.]+克)|(甲基苯丙胺（冰毒）[\\d.]+克)|(半只海洛因)|人民币\\d+元");
+		Pattern p=Pattern.compile("[,，;；。）}\\b以]([^,，;；。）}\\b\\d]*)([\\d\\s.]+|[一二三四五六七八九十]+)(元|人民币)([^\\d.一二三四五六七八九十]*)([\\d\\s.]+|[一二三四五六七八九十]+)(微克|毫克|克|粒|小包|包|公斤|千克|斤|吨|袋|小袋)([^,，;；()（）{}]+)(甲基苯丙胺|冰毒|大麻|可卡因|海洛因|吗啡|卡西酮|鸦片|K粉|摇头丸|杜冷丁|古柯|咖啡因|三唑仑|羟基丁酸)");
 		Matcher m=p.matcher(word1);
 		while(m.find())
 		{
-			if(result!=null)
-			result=result+"/"+m.group();
-			else
-				result=m.group();
+			result=m.group();
 		}
 		/*Pattern p=Pattern.compile("将[\\d\\u4e00-\\u9fa5、，.]+");
 		Matcher m=p.matcher(word1);
@@ -293,13 +288,12 @@ public class CaseRegular implements ICaseRegular{
 		double price=0;
 		double number=0;
 		double sumprice=0;
-		String[] sumPrices=this.getDrugTypeAndNumberOrUnit(word).split("元/");
-		//System.out.println(this.getDrugTypeAndNumberOrUnit(word).split("元"));
+		String[] sumPrices=this.getDrugTypeAndNumberOrUnit(word).split("/");
+		//System.out.println(this.getDrugTypeAndNumberOrUnit().split("/")[0]);
 		for(int i=0;i<sumPrices.length;i++)
 		{
-			if(sumPrices[i].contains("甲基苯丙胺")||sumPrices[i].contains("海洛因")) {
-			System.out.println(sumPrices[i]);
-			Pattern p=Pattern.compile("[\\d.]+[克份只包小袋粒]+");
+			//System.out.println(sumPrices[i]);
+			Pattern p=Pattern.compile("[\\d.]+[克包小袋粒]+");
 			Matcher m=p.matcher(sumPrices[i]);
 			while(m.find())
 			{
@@ -314,53 +308,50 @@ public class CaseRegular implements ICaseRegular{
 				
 			}
 			
-		    p=Pattern.compile("人民币\\d+");
+			p=Pattern.compile("共[\\d.]+");
 			m=p.matcher(sumPrices[i]);
 			while(m.find())
 			{
-				sumprice=Double.valueOf(m.group().split("人民币")[1]);
-				//System.out.println(sumprice);
+				sumprice=sumprice+Double.valueOf(m.group().split("共")[1]);
 			}
 			price=sumprice/number;
 			//System.out.println(number+" "+sumprice+" "+price);
 			if(i==0)
 			{
-				result=sumPrices[i].split("/")[0]+"的单价为"+String.valueOf(price)+"人民币";
+				result=sumPrices[i].split("共")[0]+"的单价为"+String.valueOf(price)+"人民币";
 			}
 			else
 			{
-				result=result+" / "+sumPrices[i].split("/")[0]+"的单价为"+String.valueOf(price)+"人民币";
-			}
+				result=result+" / "+sumPrices[i].split("共")[0]+"的单价为"+String.valueOf(price)+"人民币";
 			}
 		}
 		
 		return result;
-		
 	}
      public static void main(String[] args)
      {
-    	 String[] title= {"E:\\java高级\\舟山\\（2016）浙0902刑初00262号.doc",
-       			 "E:\\java高级\\舟山\\（2016）浙0903刑初00252号.doc",
-       			 "E:\\java高级\\舟山\\（2017）浙0902刑初110号.doc",
-       			 "E:\\java高级\\舟山\\（2017）浙0902刑初218号.doc",
-       			 "E:\\java高级\\舟山\\（2017）浙0902刑初239号.doc",
-       			 "E:\\java高级\\舟山\\（2017）浙0902刑初244号.doc",
-       			 "E:\\java高级\\舟山\\（2017）浙0902刑初250号.doc",
-       			 "E:\\java高级\\舟山\\（2017）浙0902刑初382号.doc",
-       			 "E:\\java高级\\舟山\\（2017）浙0903刑初21号.doc",
-       			 "E:\\java高级\\舟山\\（2017）浙0903刑初29号.doc",
-       			 "E:\\java高级\\舟山\\（2017）浙0903刑初31号.doc",
-       			 "E:\\java高级\\舟山\\（2017）浙0903刑初281号.doc",
-       			 "E:\\java高级\\舟山\\（2017）浙0903刑初323号.doc",
-       			 "E:\\java高级\\舟山\\（2017）浙0903刑初366号.doc",
-       			 "E:\\java高级\\舟山\\（2017）浙0921刑初53号.doc",
-       			 "E:\\java高级\\舟山\\（2017）浙0921刑初91号.doc",
-       			 "E:\\java高级\\舟山\\（2017）浙0921刑初114号.doc",
-       			 "E:\\java高级\\舟山\\（2017）浙0922刑初13号.docx",
-       			 "E:\\java高级\\舟山\\（2017）浙0922刑初32号.docx",
-       			 "E:\\java高级\\舟山\\（2017）浙0922刑初47号.docx",
-       			 "E:\\java高级\\舟山\\（2017）浙0922刑初50号.docx"
-       			 };
+    	 String[] title= {"D:\\java高级\\舟山\\（2016）浙0902刑初00262号.doc"
+    			 ,"D:\\java高级\\舟山\\（2016）浙0903刑初00252号.doc",
+    			 "D:\\java高级\\舟山\\（2017）浙0902刑初110号.doc",
+    			 "D:\\java高级\\舟山\\（2017）浙0902刑初218号.doc",
+    			 "D:\\java高级\\舟山\\（2017）浙0902刑初239号.doc",
+    			 "D:\\java高级\\舟山\\（2017）浙0902刑初244号.doc",
+    			 "D:\\java高级\\舟山\\（2017）浙0902刑初250号.doc",
+    			 "D:\\java高级\\舟山\\（2017）浙0902刑初382号.doc",
+    			 "D:\\java高级\\舟山\\（2017）浙0903刑初21号.doc",
+    			 "D:\\java高级\\舟山\\（2017）浙0903刑初29号.doc",
+    			 "D:\\java高级\\舟山\\（2017）浙0903刑初31号.doc",
+    			 "D:\\java高级\\舟山\\（2017）浙0903刑初281号.doc",
+    			 "D:\\java高级\\舟山\\（2017）浙0903刑初323号.doc",
+    			 "D:\\java高级\\舟山\\（2017）浙0903刑初366号.doc",
+    			 "D:\\java高级\\舟山\\（2017）浙0921刑初53号.doc",
+    			 "D:\\java高级\\舟山\\（2017）浙0921刑初91号.doc",
+    			 "D:\\java高级\\舟山\\（2017）浙0921刑初114号.doc",
+    			 "D:\\java高级\\舟山\\（2017）浙0922刑初13号.docx",
+    			 "D:\\java高级\\舟山\\（2017）浙0922刑初32号.docx",
+    			 "D:\\java高级\\舟山\\（2017）浙0922刑初47号.docx",
+    			 "D:\\java高级\\舟山\\（2017）浙0922刑初50号.docx"
+    			 };
     	 String[] word=new String[title.length];
     	 try {
     		 for(int i=0;i<title.length;i++)
@@ -371,7 +362,7 @@ public class CaseRegular implements ICaseRegular{
 		}
     	 CaseRegular c=new CaseRegular();
     	 for(int i=0;i<title.length;i++)
-    	 System.out.println(title[i]+" "+c.getDrugPrice(word[i]));
+    	 System.out.println(title[i]+" "+c.getCyear(word[i],title[i]));
      }
      
 }

@@ -24,12 +24,12 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
 import org.apache.xmlbeans.XmlException;
 
-public class LoadWord {
+public class LoadWord1 {
 	public static String LoadAllWord(String title) throws IOException{
         String result=null;
 		try
 		{
-		//	InputStream is = new FileInputStream(new File("E:\java高级\舟山\\（2016）浙0902刑初00262号.doc"));
+		//	InputStream is = new FileInputStream(new File("D:\\java高级\\舟山\\（2016）浙0902刑初00262号.doc"));
 			InputStream is = new FileInputStream(new File(title));
 			WordExtractor ex = new WordExtractor(is);  
             String text2003 = ex.getText();  
@@ -38,6 +38,7 @@ public class LoadWord {
 			
 		}catch(Exception e1)
 		{
+			//System.out.println(title);
 			//OPCPackage opcPackage = POIXMLDocument.openPackage(URL.WordURL); 
 			OPCPackage opcPackage = POIXMLDocument.openPackage(title); 
             POIXMLTextExtractor extractor=null;
@@ -49,7 +50,8 @@ public class LoadWord {
 			} catch (OpenXML4JException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}  
+			}
+			
             String text2007 = extractor.getText();  
             //System.out.println(text2007);
             result=text2007;
@@ -65,35 +67,14 @@ public class LoadWord {
 		try {
 			String word=LoadWord.LoadAllWord(title);
 			String[] wordlist=word.split("检察院")[1].split("\n");
-			
-			String word2=word.split("判决如下：")[1];
-			String[] wordlist2=word2.split("、");
-			/*for(int i=1;i<wordlist.length;i++)
-			{
-					System.out.println(i);
-					System.out.println(wordlist[i]);
-					System.out.println("#####");
-	
-			}
-			for(int i=0;i<wordlist2.length;i++)
-			{
-					System.out.println(i);
-					System.out.println(wordlist2[i]);
-					System.out.println("#####");
-	
-			}*/
-			int j=1;
+			String[] wordlist2=word.split("判决如下：")[1].split("）");
 			for(int i=1;i<wordlist.length;i++)
 			{
-				
 				if(wordlist[i].contains("被告人"))
 				{
-					//System.out.println(i);
-					//System.out.println(wordlist[i]+"\n"+wordlist2[i-1]);
-					//System.out.println("#####");
-					defendant=wordlist[i]+wordlist2[j];
+					//System.out.println(wordlist[i]+"\n"+wordlist2[i]);
+					defendant=wordlist[i]+wordlist2[i-1];
 					result1.add(defendant);
-					j++;
 				}
 				else
 				{
@@ -108,12 +89,18 @@ public class LoadWord {
 	}
 	public static void main(String[] args)
 	{
-          List<String> result=new ArrayList<String>();
-        result = LoadWord.LoadDefendantWord("E:\\java高级\\舟山\\（2017）浙0922刑初50号.docx");
-          for(String a:result)
-          {
-        	  System.out.println(a);
+         // List<String> result=new ArrayList<String>();
+          String result=null;
+		try {
+			result = LoadWord.LoadAllWord("D:\\Java高级\\舟山\\（2016）浙0902刑初00262号.doc");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        //  for(String a:result)
+        //  {
+        	  System.out.println(result);
         	  System.out.println("---------");
-          }
+         // }
 	}
 }

@@ -16,6 +16,7 @@ public class Leading_in {  //单纯只是把word的数据存到数据库中
 	{
 		CaseRegular caseregular=new CaseRegular();
 		String casewords=null;
+		System.out.println(url);
 		try {
 			casewords=LoadWord.LoadAllWord(url);
 		} catch (IOException e1) {
@@ -30,7 +31,7 @@ public class Leading_in {  //单纯只是把word的数据存到数据库中
 			Case c=new Case();
 			c.setCid(caseregular.getCid(title));
 			c.setCourtName(caseregular.getCourtName(casewords));
-			c.setCyear(caseregular.getCyear(casewords));
+			c.setCyear(caseregular.getCyear(casewords,url));
 			c.setDrugPrice(caseregular.getDrugPrice(casewords));
 			c.setDrugTypeAndNumberOrUnit(caseregular.getDrugTypeAndNumberOrUnit(casewords));
 			c.setFirstDefendant(caseregular.getFirstDefendant(url));

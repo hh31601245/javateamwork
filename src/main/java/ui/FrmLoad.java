@@ -87,7 +87,7 @@ public class FrmLoad extends JDialog implements ActionListener{
 		toolBar.add(kongge2);
 		toolBar.add(this.btnCancel);
 		this.getContentPane().add(toolBar, BorderLayout.SOUTH);
-		list.setPreferredSize(new Dimension(800,200));// 设置一下首选大小
+		list.setPreferredSize(new Dimension(800,1000));// 设置一下首选大小
 		list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);// 允许可间断的多选
 		this.Reload();
         list.addListSelectionListener(new ListSelectionListener() {
@@ -106,11 +106,11 @@ public class FrmLoad extends JDialog implements ActionListener{
         });
         list.setSelectedIndex(1);//默认选择第一项
         gd=new JScrollPane(list);
-        gd.setPreferredSize(new Dimension(800,200));
+        gd.setPreferredSize(new Dimension(800,800));
         workPane.add(gd);
-        workPane.setSize(800,200);
+        workPane.setSize(800,800);
 		this.getContentPane().add(workPane,BorderLayout.CENTER);
-		this.setSize(850,300);
+		this.setSize(850,900);
 		double width=Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 		double heigh=Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 		this.setLocation((int)(width-this.getWidth())/2,(int)(heigh-this.getHeight())/2);
@@ -151,6 +151,7 @@ public class FrmLoad extends JDialog implements ActionListener{
 				        	 Judgment j=new Judgment();
 				        	 String jurl1=jurl+"\\"+filelist[i];
 				        	 //System.out.println(filelist[i]);
+				        	 System.out.println(jurl1);
 				        	 try {
 				 				content=LoadWord.LoadAllWord(jurl1);
 				 			} catch (IOException e1) {
@@ -168,9 +169,9 @@ public class FrmLoad extends JDialog implements ActionListener{
 							System.out.println(jtitle);
 							j.setTitle(jtitle);
 						    j.setContent(content);
-						  //  Util.judgmentmanage.addJudgment(j);
-						  //  Leading_in.Leading_in_Case(jurl,jtitle);
-						   // Leading_in.Leading_in_Defendant(jurl,jtitle);
+						    Util.judgmentmanage.addJudgment(j);
+						    Leading_in.Leading_in_Case(jurl1,jtitle);
+						    Leading_in.Leading_in_Defendant(jurl1,jtitle);
 
 				         }
 
