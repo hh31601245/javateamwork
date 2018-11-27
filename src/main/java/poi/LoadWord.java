@@ -64,6 +64,10 @@ public class LoadWord {
 		String defendant=null;
 		try {
 			String word=LoadWord.LoadAllWord(title);
+			if(word.contains("检察院")==false||word.contains("判决如下：")==false||word.contains("、")==false||word.contains("被告人")==false)
+			{
+				return null;
+			}
 			String[] wordlist=word.split("检察院")[1].split("\n");
 			
 			String word2=word.split("判决如下：")[1];

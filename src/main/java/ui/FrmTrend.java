@@ -39,10 +39,13 @@ public class FrmTrend   extends JDialog implements ActionListener{
         result=agetrendjudge.judgetrend(Case.caselist);
         
         JLabel label01 = new JLabel();//文本标签
-        label01.setText("结论："+agetrendjudge.conclusion(result));
+        label01.setText("结论："+agetrendjudge.conclusion(result).split("a")[0]);
         label01.setFont(new Font(null, Font.PLAIN, 25));  // 设置字体，null 表示使用默认字体
         panel.add(label01);//并添加到 面板容器 中
-
+        JLabel label02 = new JLabel();//文本标签
+        label02.setText(""+agetrendjudge.conclusion(result).split("a")[1]);
+        label02.setFont(new Font(null, Font.PLAIN, 25));  // 设置字体，null 表示使用默认字体
+        panel.add(label02);//并添加到 面板容器 中
         btn = new JButton("查看折线图");// 创建一个按钮  
         btn.setFont(new Font(null, Font.PLAIN, 20));
         btn.addActionListener(this);

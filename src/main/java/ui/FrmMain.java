@@ -9,10 +9,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -47,7 +49,7 @@ public class FrmMain extends JFrame implements ActionListener
 	private JMenu menu_trend=new JMenu("趋势分析");
 	private JMenuItem menuitem_trend=new JMenuItem("年龄发展趋势分析");
 	private JMenu menu_neo4j=new JMenu("生成Neo4j");
-	private JMenuItem menuitem_neo4j=new JMenuItem("生成Neo4j");
+	private JMenuItem menuitem_neo4j=new JMenuItem("生成Neo4j(显示犯人的年龄分布)");
 	private FrmLoad dlgLoad=null;
 	private FrmStatistics dlgStatistics=null;
 	private FrmSearch dlgSearch=null;
@@ -219,7 +221,13 @@ public class FrmMain extends JFrame implements ActionListener
 		}
 		else if(e.getSource()==this.menuitem_load_out)
 		{
-			Lead_out.write();
+			JFileChooser jf=new JFileChooser();
+		    jf.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES );
+		    jf.setMultiSelectionEnabled(true);
+		    jf.showOpenDialog(this); 
+		    File f=jf.getSelectedFile();
+		    String jurl=f.getAbsolutePath();
+			Lead_out.write(jurl);
 			JOptionPane.showMessageDialog(null, "导出成功", "标题",JOptionPane.WARNING_MESSAGE); 
 		}
 		else if(e.getSource()==this.menuitem_search)
@@ -237,7 +245,13 @@ public class FrmMain extends JFrame implements ActionListener
 			neo4j.createNeo4j1.Delete();
 			neo4j.createNeo4j1.Create();
 			neo4j.useNeo4j.Save();
-			JOptionPane.showMessageDialog(null, "生成成功，在cmd中输入neo4j console，然后登录http://127.0.0.1:7474查看", "标题",JOptionPane.WARNING_MESSAGE); 
+			try {
+				Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+"132\\123.html");
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			//JOptionPane.showMessageDialog(null, "生成成功，在cmd中输入neo4j console，然后登录http://127.0.0.1:7474查看", "标题",JOptionPane.WARNING_MESSAGE); 
 		}
 		/*if(e.getSource()==this.menu_add)
 		{

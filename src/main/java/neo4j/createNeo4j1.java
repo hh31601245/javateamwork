@@ -57,18 +57,18 @@ public class createNeo4j1 {
             	//tx.close();
             	for(Case c:Case.caselist)
             	{
-            	/*	tx.run("create(Case:Case{Cid:{Cid},Cyear:{Cyear},CourtName:{CourtName},"
+            		tx.run("create(Case:Case{name:{name},Cyear:{Cyear},CourtName:{CourtName},"
             				+ "NumberPeople:{NumberPeople},MinAge:{MinAge},FirstDefendant:"
             				+ "{FirstDefendant},DrugTypeAndNumberOrUnit:{DrugTypeAndNumberOrUnit},"
             				+ "DrugPrice:{DrugPrice}})",
-            				parameters("Cid",c.getCid(),"Cyear",c.getCyear(),"CourtName",c.getCourtName(),
-            						"NumberPeople",String.valueOf(c.getNumberPeople()),"MinAge",
-            						String.valueOf(c.getMinAge()),"FirstDefendant",c.getFirstDefendant(),
+            				parameters("name",c.getCid(),"Cyear",c.getCyear(),"CourtName",c.getCourtName(),
+            						"NumberPeople",c.getNumberPeople(),"MinAge",
+            						c.getMinAge(),"FirstDefendant",c.getFirstDefendant(),
             						"DrugTypeAndNumberOrUnit",c.getDrugTypeAndNumberOrUnit(),
-            						"DrugPrice",c.getDrugPrice()));*/
-            		tx.run("create(Case:Case{name:{name}})",
+            						"DrugPrice",c.getDrugPrice()));
+            		/*tx.run("create(Case:Case{name:{name}})",
             				parameters("name",c.getCid()));
-            		tx.success();
+            		tx.success();*/
             		
             		List<Defendant> defendantlist=new ArrayList<Defendant>();
 					try {
@@ -79,23 +79,67 @@ public class createNeo4j1 {
 					}
             		for(Defendant d:defendantlist)
             		{
-            			/*tx.run("create(Defendant:Defendant{Dname:{Dname},Sex:{Sex},Age:{Age},DateOfBrith:{DateOfBrith},"
+            			tx.run("create(Defendant:Defendant{name:{name},Sex:{Sex},Age:{Age},DateOfBrith:{DateOfBrith},"
             					+ "Education:{Education},Crime:{Crime},PenaltyType:{PenaltyType},"
             					+ "Sentence:{Sentence},PropertyPenaltyType:{PropertyPenaltyType},"
             					+ "PropertyPenaltyAmount:{PropertyPenaltyAmount},Cid:{Cid}})",
-            					parameters("Dname",d.getDname(),"Sex",d.getSex(),"Age",String.valueOf(d.getAge()),
+            					parameters("name",d.getDname(),"Sex",d.getSex(),"Age",d.getAge(),
             							"DateOfBrith",d.getDateOfBrith(),"Education",d.getEducation(),"Crime",d.getCrime(),
             							"PenaltyType",d.getPenaltyType(),"Sentence",d.getSentence(),
-            							"PropertyPenaltyType",d.getPropertyPenaltyType(),"PropertyPenaltyAmount",String.valueOf(d.getPropertyPenaltyAmount()),
+            							"PropertyPenaltyType",d.getPropertyPenaltyType(),"PropertyPenaltyAmount",d.getPropertyPenaltyAmount(),
             							"Cid",d.getCid()));
-            			tx.success();*/
-            			tx.run("create(Defendant:Defendant{name:{name},Cid:{Cid}})",
+            			tx.success();
+            			/*tx.run("create(Defendant:Defendant{name:{name},Cid:{Cid}})",
             					parameters("name",d.getDname(),"Cid",d.getCid()));
             			tx.success();
             			 tx.run("match(a:Defendant),(b:Case) where a.Cid=b.name create(a)-[r:is_this_case_defendant]->(b)");
-            			 tx.success();
+            			 tx.success();*/
+            			/* tx.run("create(Defendant:Defendant{name:{name},Age:{Age}})",
+             					parameters("name",d.getDname(),"Age",d.getAge()));
+             			tx.success();*/
+            		/*	tx.run("create(Defendant:Defendant{name:{name},Age:{Age},Sex:{Sex},DateOfBrith:{DateOfBrith},Education:{Education},Crime:{Crime}})",
+             					parameters("name",d.getDname(),"Age",d.getAge(),"Sex",d.getSex(),"DateOfBrith",d.getDateOfBrith(),"Education",d.getEducation(),"Crime",d.getCrime()));
+             			tx.success();*/
+            			 
             		}
             	}
+            	String[] age={"<18","18~30岁","30~40岁","40~50岁",">=50岁"};
+             	for(int i=0;i<age.length;i++)
+             	{
+             		tx.run("create(Age:Age{name:{name}})",
+            				parameters("name",age[i]));
+             		tx.success();
+             		if(i==0)
+             		{
+             			tx.run("match(a:Defendant),(b:Age) where a.Age<18 and b.name={Age} create(a)-[r:is_this_age]->(b)",
+             				parameters("Age",age[i]));
+             			tx.success();
+             		}
+             		else if(i==1)
+             		{
+             			tx.run("match(a:Defendant),(b:Age) where a.Age>=18 and a.Age<30 and b.name={Age} create(a)-[r:is_this_age]->(b)",
+                 				parameters("Age",age[i]));
+                 			tx.success();
+             		}
+             		else if(i==2)
+             		{
+             			tx.run("match(a:Defendant),(b:Age) where a.Age>=30 and a.Age<40 and b.name={Age} create(a)-[r:is_this_age]->(b)",
+                 				parameters("Age",age[i]));
+                 			tx.success();
+             		}
+             		else if(i==3)
+             		{
+             			tx.run("match(a:Defendant),(b:Age) where a.Age>=40 and a.Age<50 and b.name={Age} create(a)-[r:is_this_age]->(b)",
+                 				parameters("Age",age[i]));
+                 			tx.success();
+             		}
+             		else if(i==4)
+             		{
+             			tx.run("match(a:Defendant),(b:Age) where a.Age>=50 and b.name={Age} create(a)-[r:is_this_age]->(b)",
+                 				parameters("Age",age[i]));
+                 			tx.success();
+             		}
+             	}	
             }
           /*  try(Transaction tx = session.beginTransaction()){
 

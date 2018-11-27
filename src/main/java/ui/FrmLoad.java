@@ -11,6 +11,7 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -41,7 +42,7 @@ public class FrmLoad extends JDialog implements ActionListener{
 	private JButton btnLoad=new JButton("载入");
 	private JButton btnCancel=new JButton("取消");
 	private JButton btnOk=new JButton("确定");
-	private JButton btnAllSelect=new JButton("全选");
+	private JButton btnAllSelect=new JButton("全选进入");
 	private JButton btnDelete=new JButton("删除");
 	private JList<String> list=new JList<String>();
 	int i=0;
@@ -76,10 +77,11 @@ public class FrmLoad extends JDialog implements ActionListener{
 		toolBar.add(this.btnLoad);
 		JPanel kongge=new JPanel();
 		kongge.setPreferredSize(new Dimension(100,0));
+		toolBar.add(kongge);
 		toolBar.add(this.btnAllSelect);
 		JPanel kongge0=new JPanel();
 		kongge0.setPreferredSize(new Dimension(100,0));
-		toolBar.add(kongge);
+		toolBar.add(kongge0);
 		toolBar.add(this.btnDelete);
 		JPanel kongge1=new JPanel();
 		kongge1.setPreferredSize(new Dimension(100,0));
@@ -246,6 +248,23 @@ public class FrmLoad extends JDialog implements ActionListener{
             }
             this.Reload();
             System.out.println();
+		}
+		else if(e.getSource()==this.btnAllSelect)
+		{
+			 List<String> titles=Util.judgmentmanage.loadAll();
+			 for(String ti:titles)
+			 {
+	            	Case caseitem=null;
+					try {
+						caseitem = Util.casemanage.searchCase(ti);
+						Case.caselist.add(caseitem);
+					} catch (BaseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+	                
+	            }
+				this.setVisible(false);
 		}
 	}
 	public static void main(String[] args)

@@ -192,7 +192,7 @@ public class useNeo4j
     }
     public static void Save()
     {
-    	String cypher1 = "match p=(:Case)-[*..1]-() return p";
+    	String cypher1 = "match p=(:Defendant)-[*..1]-() return p";
 
         StringBuffer relationBuffer1 = executeFindRelationCypher(cypher1);
         StringBuffer relationNodesBuffer1 = executeFindRelationNodesCypher(cypher1);

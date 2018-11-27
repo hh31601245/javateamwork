@@ -1,8 +1,11 @@
 package csv;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.List;
+
+import javax.swing.JFileChooser;
 
 import com.csvreader.CsvReader;
 import com.csvreader.CsvWriter;
@@ -12,10 +15,9 @@ import model.Defendant;
 import util.BaseException;
 
 public class Lead_out {
-	public static void write(){
-
-        String filePath = "Case.csv";
-        String filePath1="Defendant.csv";
+	public static void write(String jurl){
+        String filePath = jurl+"\\Case.csv";
+        String filePath1=jurl+"\\Defendant.csv";
         try {
             // 创建CSV写对象
             CsvWriter csvWriter = new CsvWriter(filePath,',', Charset.forName("GBK"));
@@ -60,6 +62,6 @@ public class Lead_out {
     }
 	public static void main(String[] args)
 	{
-		Lead_out.write();
+		//Lead_out.write();
 	}
 }

@@ -82,6 +82,7 @@ public class FrmStatistics extends JDialog implements ActionListener {
 			         chartFrame.pack(); // 以合适的大小展现图形
 			         chartFrame.setVisible(true);// 图形是否可见
 		}
+		//public static String agemaxcount=null;
 		public FrmStatistics(Frame f,String s,boolean b,List<Case> caselist)
 		//public FrmStatistics(List<Case> caselist)
 		{
